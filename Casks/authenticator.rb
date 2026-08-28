@@ -12,7 +12,7 @@ cask "authenticator" do
     strategy :github_latest
   end
 
-  depends_on macos: ">= :catalina"
+  depends_on macos: :catalina
 
   app "Authenticator.app"
 
