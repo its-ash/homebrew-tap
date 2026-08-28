@@ -1,6 +1,6 @@
-# shurutech Homebrew Tap
+# Ash Homebrew Tap
 
-Homebrew Casks for shurutech macOS applications.
+Homebrew Casks for Ash macOS applications.
 
 ## Usage
 
