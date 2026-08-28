@@ -17,7 +17,7 @@ cask "authenticator" do
   app "Authenticator.app"
 
   postflight do
-    `xattr -cr "#{appdir}/Authenticator.app"`
+    `xattr -cr /Applications/Authenticator.app`
   end
 
   zap trash: [
