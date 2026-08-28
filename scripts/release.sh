@@ -2,34 +2,24 @@
 set -euo pipefail
 
 REPO="its-ash/authenticator"
-APP_NAME="Authenticator"
 CASK_FILE="Casks/authenticator.rb"
 
 if [[ $# -lt 1 ]]; then
-  echo "Usage: $0 <version> [dmg-path]"
-  echo "  e.g. $0 1.0.0 ./Authenticator-1.0.0.dmg"
+  echo "Usage: $0 <version>"
+  echo "  Fetches Authenticator-<version>-macos.zip from GitHub Releases"
+  echo "  e.g. $0 1.0.3"
   exit 1
 fi
 
 VERSION="$1"
-DMG_PATH="${2:-./${APP_NAME}-${VERSION}.dmg}"
+ZIP_NAME="Authenticator-${VERSION}-macos.zip"
+DOWNLOAD_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${ZIP_NAME}"
 
-if [[ ! -f "$DMG_PATH" ]]; then
-  echo "Error: DMG not found at $DMG_PATH"
-  exit 1
-fi
+echo "Downloading $DOWNLOAD_URL..."
+curl -sL -o "/tmp/${ZIP_NAME}" "$DOWNLOAD_URL"
 
-SHA=$(shasum -a 256 "$DMG_PATH" | awk '{print $1}')
-
-if command -v gh >/dev/null 2>&1; then
-  echo "Uploading $DMG_PATH to GitHub Releases..."
-  gh release create "v${VERSION}" "$DMG_PATH" \
-    --repo "$REPO" \
-    --title "v${VERSION}" \
-    --generate-notes
-else
-  echo "gh CLI not found; upload $DMG_PATH manually to $REPO v${VERSION}"
-fi
+SHA=$(shasum -a 256 "/tmp/${ZIP_NAME}" | awk '{print $1}')
+echo "sha256: $SHA"
 
 echo "Updating $CASK_FILE -> version $VERSION, sha256 $SHA"
 perl -i -pe "s/^  version .*/  version \"$VERSION\"/" "$CASK_FILE"
