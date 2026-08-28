@@ -16,6 +16,10 @@ cask "authenticator" do
 
   app "Authenticator.app"
 
+  postflight do
+    `xattr -cr "#{appdir}/Authenticator.app"`
+  end
+
   zap trash: [
     "~/Library/Application Support/in.itsash.authApp",
     "~/Library/Preferences/in.itsash.authApp.plist",
