@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="shurutech/authenticator"
+REPO="its-ash/authenticator"
 APP_NAME="Authenticator"
 CASK_FILE="Casks/authenticator.rb"
 

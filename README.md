@@ -5,7 +5,7 @@ Homebrew Casks for shurutech macOS applications.
 ## Usage
 
 ```bash
-brew tap shurutech/tap
+brew tap its-ash/tap
 brew install --cask authenticator
 ```
 
