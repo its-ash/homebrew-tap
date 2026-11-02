@@ -2,66 +2,834 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ash Homebrew Tap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ash Homebrew Tap — Nodio & Router</title>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: #fff;
-      color: #000;
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text-primary: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --text-tertiary: #86868b;
+      --accent: #0071e3;
+      --accent-hover: #0077ed;
+      --border: #d2d2d7;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06), 0 8px 32px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.08), 0 32px 96px rgba(0, 0, 0, 0.06);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 16px;
+      --space-4: 24px;
+      --space-5: 32px;
+      --space-6: 48px;
+      --space-7: 64px;
+      --space-8: 96px;
+      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --transition-fast: 120ms ease-out;
+      --transition-normal: 200ms ease-out;
+      --transition-slow: 300ms ease-out;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      :root {
+        --transition-fast: 0ms;
+        --transition-normal: 0ms;
+        --transition-slow: 0ms;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 20px;
+      padding: 0;
     }
-    h1 {
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.47059;
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: -0.022em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: var(--space-8) var(--space-6) var(--space-7);
+      text-align: center;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: var(--space-1) var(--space-3);
+      background: rgba(0, 113, 227, 0.08);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: var(--space-4);
+      letter-spacing: -0.01em;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 5vw, 56px);
       font-weight: 600;
+      line-height: 1.07143;
+      letter-spacing: -0.005em;
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
     }
-    .container {
+
+    .hero p {
+      font-size: clamp(19px, 2vw, 21px);
+      font-weight: 400;
+      line-height: 1.38095;
+      letter-spacing: 0.011em;
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin: 0 auto var(--space-6);
+    }
+
+    .hero-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      justify-content: center;
+      gap: var(--space-3);
     }
-    .card {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      width: 200px;
-      padding: 16px;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      transition: transform 0.1s ease-in-out;
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      font-family: var(--font-sans);
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.17647;
+      letter-spacing: -0.022em;
+      border-radius: var(--radius-lg);
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      min-height: 44px;
     }
-    .card:hover {
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      color: #fff;
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: #f5f5f7;
+      border-color: var(--accent);
+    }
+
+    /* Apps Grid */
+    .apps {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-6) var(--space-8);
+    }
+
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-5);
+    }
+
+    @media (max-width: 734px) {
+      .apps-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* App Card */
+    .app-card {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+    }
+
+    .app-card:hover {
+      box-shadow: var(--shadow-md);
       transform: translateY(-2px);
     }
-    .card a {
-      text-decoration: none;
+
+    .app-card:focus-within {
+      box-shadow: var(--shadow-md), 0 0 0 3px rgba(0, 113, 227, 0.2);
+    }
+
+    .app-card__header {
+      padding: var(--space-6) var(--space-6) var(--space-4);
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .app-card__icon {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-md);
+      margin: 0 auto var(--space-4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .app-card__icon--nodio {
+      background: linear-gradient(135deg, #0071e3 0%, #0051a8 100%);
+    }
+
+    .app-card__icon--router {
+      background: linear-gradient(135deg, #30d158 0%, #28a745 100%);
+    }
+
+    .app-card__icon svg {
+      width: 32px;
+      height: 32px;
+      color: #fff;
+    }
+
+    .app-card__name {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.16667;
+      letter-spacing: 0.004em;
+      color: var(--text-primary);
+      margin-bottom: var(--space-1);
+    }
+
+    .app-card__tagline {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.47059;
+      color: var(--text-secondary);
+    }
+
+    .app-card__body {
+      padding: var(--space-5) var(--space-6);
+    }
+
+    .app-card__description {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.53333;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-5);
+    }
+
+    .app-card__features {
+      list-style: none;
+      margin-bottom: var(--space-5);
+    }
+
+    .app-card__features li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.42857;
+      color: var(--text-tertiary);
+      padding: var(--space-2) 0;
+    }
+
+    .app-card__features li::before {
+      content: "";
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-tertiary);
+      margin-top: 6px;
+    }
+
+    .app-card__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border);
+    }
+
+    .app-card__btn {
+      flex: 1;
+      min-width: 140px;
+    }
+
+    /* Install Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity var(--transition-normal);
+    }
+
+    .modal-overlay[aria-hidden="false"] {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      max-width: 560px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      transform: scale(0.95) translateY(10px);
+      transition: transform var(--transition-normal);
+    }
+
+    .modal-overlay[aria-hidden="false"] .modal {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal__header {
+      padding: var(--space-5) var(--space-6);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal__title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: 0.009em;
+      color: var(--text-primary);
+    }
+
+    .modal__close {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: transparent;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition-fast), color var(--transition-fast);
+    }
+
+    .modal__close:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: var(--text-primary);
+    }
+
+    .modal__close:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .modal__body {
+      padding: var(--space-5) var(--space-6);
+    }
+
+    .install-section {
+      margin-bottom: var(--space-6);
+    }
+
+    .install-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .install-section__title {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .install-section__desc {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-3);
+    }
+
+    .code-block {
+      background: #1d1d1f;
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      overflow-x: auto;
+      font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", monospace;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #f5f5f7;
+    }
+
+    .code-block code {
+      font-family: inherit;
+      font-size: inherit;
       color: inherit;
-      display: block;
     }
-    .card h2 {
-      margin: 0 0 8px 0;
-      font-size: 1.2em;
+
+    .code-block .comment { color: #6a6e73; }
+    .code-block .command { color: #fff; }
+    .code-block .arg { color: #7dcfff; }
+    .code-block .cask { color: #ffd60a; }
+
+    .install-note {
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--text-tertiary);
+      margin-top: var(--space-3);
+      padding: var(--space-3);
+      background: rgba(0, 113, 227, 0.06);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--accent);
     }
-    .card p {
-      margin: 0;
-      font-size: 0.9em;
-      color: #555;
+
+    /* Footer */
+    .footer {
+      padding: var(--space-6);
+      text-align: center;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .footer p {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.42857;
+      color: var(--text-tertiary);
+    }
+
+    .footer a {
+      font-weight: 500;
+    }
+
+    /* Toast/Notification */
+    .toast {
+      position: fixed;
+      bottom: var(--space-6);
+      right: var(--space-6);
+      background: var(--text-primary);
+      color: #fff;
+      padding: var(--space-3) var(--space-5);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.4;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: transform var(--transition-normal), opacity var(--transition-normal);
+      z-index: 1100;
+    }
+
+    .toast[aria-live="polite"] {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-tertiary);
     }
   </style>
 </head>
 <body>
-  <h1>Ash Homebrew Tap Apps</h1>
-  <div class="container">
-    <div class="card">
-      <a href="https://github.com/its-ash/Nodio">
-        <h2>Nodio</h2>
-        <p>Voice to text, on your Mac</p>
-      </a>
-    </div>
-    <div class="card">
-      <a href="https://github.com/its-ash/router">
-        <h2>Router</h2>
-        <p>Native macOS AI routing client</p>
-      </a>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" aria-labelledby="hero-title">
+      <span class="hero-badge">Homebrew Tap for macOS</span>
+      <h1 id="hero-title">Ash Homebrew Tap</h1>
+      <p>Native macOS applications installable via Homebrew. Voice-to-text dictation and AI model routing — built for developers who value privacy and performance.</p>
+      <div class="hero-links">
+        <a href="https://github.com/its-ash/tap" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+          View on GitHub
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+        </a>
+        <a href="https://github.com/its-ash/tap/issues/new/choose" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+          Report an Issue
+        </a>
+      </div>
+    </section>
+
+    <!-- Apps Grid -->
+    <section class="apps" aria-labelledby="apps-title">
+      <h2 id="apps-title" class="sr-only">Available Applications</h2>
+      <div class="apps-grid">
+        <!-- Nodio Card -->
+        <article class="app-card" data-app="nodio">
+          <header class="app-card__header">
+            <div class="app-card__icon app-card__icon--nodio" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="22"/>
+              </svg>
+            </div>
+            <h3 class="app-card__name">Nodio</h3>
+            <p class="app-card__tagline">Voice to text, on your Mac</p>
+          </header>
+          <div class="app-card__body">
+            <p class="app-card__description">Hold a key, speak, release — your words land in any text field. On-device Whisper, zero cloud, no subscriptions.</p>
+            <ul class="app-card__features">
+              <li>On-device Whisper (Indian English + Hinglish)</li>
+              <li>Voice commands: punctuation, delete, snippets</li>
+              <li>Per-app styles: casual, formal, code-safe</li>
+              <li>Floating HUD with live waveform</li>
+              <li>History, stats & custom vocabulary</li>
+              <li>Requires macOS 13.3+ (Ventura)</li>
+            </ul>
+            <div class="app-card__actions">
+              <a href="https://github.com/its-ash/Nodio" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
+                View on GitHub
+              </a>
+              <button type="button" class="btn btn-primary app-card__btn" data-install="nodio" aria-label="Show Nodio installation instructions">
+                Install
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Router Card -->
+        <article class="app-card" data-app="router">
+          <header class="app-card__header">
+            <div class="app-card__icon app-card__icon--router" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="17 1 21 5 17 9"/>
+                <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                <polyline points="7 23 3 19 7 15"/>
+                <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+              </svg>
+            </div>
+            <h3 class="app-card__name">Router</h3>
+            <p class="app-card__tagline">Native macOS AI routing client</p>
+          </header>
+          <div class="app-card__body">
+            <p class="app-card__description">A local OpenAI-compatible proxy that routes requests across NVIDIA, OpenRouter, Cloudflare, Groq, Ollama, and Hugging Face — with automatic fallback and model discovery.</p>
+            <ul class="app-card__features">
+              <li>Multi-provider routing with automatic fallback</li>
+              <li>OpenAI-compatible API (port 9694)</li>
+              <li>Model discovery & capability detection</li>
+              <li>Token usage & request activity log</li>
+              <li>Menu-bar app with zero-config setup</li>
+              <li>Requires macOS 15.0+ (Sequoia)</li>
+            </ul>
+            <div class="app-card__actions">
+              <a href="https://github.com/its-ash/router" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
+                View on GitHub
+              </a>
+              <button type="button" class="btn btn-primary app-card__btn" data-install="router" aria-label="Show Router installation instructions">
+                Install
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <p>Built by <a href="https://itsash.in" target="_blank" rel="noopener noreferrer">Ashvini Jangid</a> · <a href="https://github.com/its-ash/tap" target="_blank" rel="noopener noreferrer">GitHub</a> · <a href="https://itsash.in" target="_blank" rel="noopener noreferrer">itsash.in</a></p>
+  </footer>
+
+  <!-- Install Modal -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal">
+      <header class="modal__header">
+        <h3 class="modal__title" id="modal-title">Install <span id="modal-app-name"></span></h3>
+        <button type="button" class="modal__close" id="modal-close" aria-label="Close installation instructions">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <line x1="15" y1="5" x2="5" y2="15"/>
+            <line x1="5" y1="5" x2="15" y2="15"/>
+          </svg>
+        </button>
+      </header>
+      <div class="modal__body" id="modal-body">
+        <!-- Content injected by JS -->
+      </div>
     </div>
   </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-hidden="true"></div>
+
+  <script>
+    // ===== App Data =====
+    const apps = {
+      nodio: {
+        name: "Nodio",
+        cask: "nodio",
+        repo: "its-ash/Nodio",
+        desc: "Voice to text, on your Mac",
+        requirements: "Requires macOS 13.3+ (Ventura)",
+        commands: [
+          { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
+          { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
+          { comment: "Install Nodio", command: "brew install --cask nodio" },
+        ],
+        notes: "On first launch, grant Microphone and Accessibility permissions in System Settings → Privacy & Security."
+      },
+      router: {
+        name: "Router",
+        cask: "router",
+        repo: "its-ash/router",
+        desc: "Native macOS AI routing client",
+        requirements: "Requires macOS 15.0+ (Sequoia)",
+        commands: [
+          { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
+          { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
+          { comment: "Install Router", command: "brew install --cask router" },
+        ],
+        notes: "After installing, open Router from Applications. Add at least one provider API key in Settings to start routing requests."
+      }
+    };
+
+    // ===== DOM Elements =====
+    const modalOverlay = document.getElementById('modal-overlay');
+    const modalTitle = document.getElementById('modal-app-name');
+    const modalBody = document.getElementById('modal-body');
+    const modalClose = document.getElementById('modal-close');
+    const toast = document.getElementById('toast');
+    const installButtons = document.querySelectorAll('[data-install]');
+
+    // ===== Modal Functions =====
+    function openModal(appKey) {
+      const app = apps[appKey];
+      if (!app) return;
+
+      modalTitle.textContent = app.name;
+
+      const commandsHtml = app.commands.map(cmd =>
+        `<span class="comment"># ${cmd.comment}</span>\n<span class="command">brew</span> <span class="arg">${cmd.command.replace('brew ', '')}</span>`
+      ).join('\n\n');
+
+      modalBody.innerHTML = `
+        <div class="install-section">
+          <h4 class="install-section__title">${app.name}</h4>
+          <p class="install-section__desc">${app.desc}</p>
+          <p class="install-section__desc" style="font-size: 13px; color: var(--text-tertiary);">${app.requirements}</p>
+        </div>
+        <div class="install-section">
+          <h4 class="install-section__title">Installation</h4>
+          <div class="code-block"><code>${escapeHtml(commandsHtml)}</code></div>
+        </div>
+        <div class="install-note">
+          <strong>Note:</strong> ${app.notes}
+        </div>
+        <div class="install-section" style="margin-top: var(--space-4);">
+          <a href="https://github.com/${app.repo}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" style="width: 100%; justify-content: center;">
+            View on GitHub →
+          </a>
+        </div>
+      `;
+
+      modalOverlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      // Focus management
+      const focusable = modalOverlay.querySelector('button, a, [href]');
+      if (focusable) focusable.focus();
+
+      // Trap focus
+      modalOverlay.addEventListener('keydown', trapFocus);
+    }
+
+    function closeModal() {
+      modalOverlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      modalOverlay.removeEventListener('keydown', trapFocus);
+    }
+
+    function trapFocus(e) {
+      if (e.key !== 'Tab') return;
+      const focusable = modalOverlay.querySelectorAll('button, a, [href], [tabindex]:not([tabindex="-1"])');
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    // ===== Toast =====
+    let toastTimer;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.setAttribute('aria-hidden', 'false');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.setAttribute('aria-hidden', 'true');
+      }, 3000);
+    }
+
+    // ===== Copy to Clipboard =====
+    async function copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast('Copied to clipboard');
+      } catch {
+        showToast('Failed to copy');
+      }
+    }
+
+    // ===== Code Block Click to Copy =====
+    function setupCodeBlocks() {
+      modalBody.addEventListener('click', (e) => {
+        const codeBlock = e.target.closest('.code-block');
+        if (codeBlock) {
+          const code = codeBlock.textContent.trim();
+          copyToClipboard(code);
+        }
+      });
+    }
+
+    // ===== Escape HTML =====
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&')
+        .replace(/</g, '<')
+        .replace(/>/g, '>')
+        .replace(/"/g, '"')
+        .replace(/'/g, '&#039;');
+    }
+
+    // ===== Event Listeners =====
+    installButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const appKey = btn.getAttribute('data-install');
+        openModal(appKey);
+      });
+    });
+
+    modalClose.addEventListener('click', closeModal);
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalOverlay.getAttribute('aria-hidden') === 'false') {
+        closeModal();
+      }
+    });
+
+    setupCodeBlocks();
+
+    // ===== Smooth Scroll for Anchor Links =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ===== Respect Reduced Motion =====
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReducedMotion.matches) {
+      document.documentElement.style.setProperty('--transition-fast', '0ms');
+      document.documentElement.style.setProperty('--transition-normal', '0ms');
+      document.documentElement.style.setProperty('--transition-slow', '0ms');
+    }
+  </script>
 </body>
 </html>
