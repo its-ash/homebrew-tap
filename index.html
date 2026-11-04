@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ash Homebrew Tap: Nodio & Router</title>
-  <meta name="description" content="Homebrew tap for Ash's native macOS apps. Install Nodio (voice to text) and Router (AI routing client) with one command.">
+  <title>Ash Homebrew Tap: Nodio, Router & Kode</title>
+  <meta name="description" content="Homebrew tap for Ash's native macOS apps. Install Nodio (voice to text), Router (AI routing client), and Kode (coding agent) with one command.">
   <style>
     :root {
       --bg: #f5f5f7;
@@ -226,7 +226,7 @@
 
     .apps-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: var(--space-5);
     }
     @media (max-width: 820px) {
@@ -277,6 +277,9 @@
     }
     .app-card__icon--router {
       background: linear-gradient(145deg, #32d74b 0%, #248a3d 100%);
+    }
+    .app-card__icon--kode {
+      background: linear-gradient(145deg, #bf5af2 0%, #8944ab 100%);
     }
 
     .app-card__name {
@@ -580,7 +583,7 @@
         Homebrew Tap for macOS
       </span>
       <h1 id="hero-title">Native Mac apps.<br>One command away.</h1>
-      <p>Install Nodio and Router with Homebrew. Voice-to-text dictation and a local AI routing client, built for privacy, performance, and speed.</p>
+      <p>Install Nodio, Router, and Kode with Homebrew. Voice-to-text dictation, a local AI routing client, and a coding agent, built for privacy, performance, and speed.</p>
       <div class="hero__actions">
         <a href="#apps" class="btn btn-primary">Browse apps</a>
         <a href="https://github.com/its-ash/tap" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">View on GitHub</a>
@@ -590,7 +593,7 @@
     <section class="apps" id="apps" aria-labelledby="apps-title">
       <div class="apps__heading">
         <h2 id="apps-title">Available Applications</h2>
-        <p>Two native, zero-cloud utilities. Install either in seconds.</p>
+        <p>Three native Mac utilities. Install any of them in seconds.</p>
       </div>
       <div class="apps-grid">
         <article class="app-card" data-app="nodio">
@@ -659,6 +662,38 @@
             </div>
           </div>
         </article>
+
+        <article class="app-card" data-app="kode">
+          <header class="app-card__header">
+            <div class="app-card__icon app-card__icon--kode" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <h3 class="app-card__name">Kode</h3>
+            <p class="app-card__tagline">Native macOS coding agent</p>
+          </header>
+          <div class="app-card__body">
+            <p class="app-card__description">A coding agent that reads, edits, and runs code in one project folder. It sends each step through Router, so it uses any model Router can reach.</p>
+            <ul class="app-card__features">
+              <li>Plan, Ask, and Auto modes</li>
+              <li>File, search, edit, and shell tools in a sandboxed workspace</li>
+              <li>Skill library with /slash invocation</li>
+              <li>File tree, preview, and chat history per project</li>
+              <li>Works with Router on port 9694</li>
+              <li>Requires macOS 15.0+ (Sequoia)</li>
+            </ul>
+            <div class="app-card__actions">
+              <a href="https://github.com/its-ash/kode" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
+                View on GitHub
+              </a>
+              <button type="button" class="btn btn-primary app-card__btn" data-install="kode" aria-label="Show Kode installation instructions">
+                Install
+              </button>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
   </main>
@@ -714,6 +749,20 @@
           { comment: "Install Router", command: "brew install --cask router" },
         ],
         notes: "After installing, open Router from Applications. Add at least one provider API key in Settings to start routing requests."
+      },
+      kode: {
+        name: "Kode",
+        cask: "kode",
+        repo: "its-ash/kode",
+        desc: "Native macOS coding agent",
+        requirements: "Requires macOS 15.0+ (Sequoia)",
+        commands: [
+          { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
+          { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
+          { comment: "Install Router (Kode sends requests through it)", command: "brew install --cask router" },
+          { comment: "Install Kode", command: "brew install --cask kode" },
+        ],
+        notes: "Start Router first. Then open Kode from Applications and choose a project folder."
       }
     };
 
