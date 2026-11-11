@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ash Homebrew Tap: Nodio, Router & Kode</title>
-  <meta name="description" content="Homebrew tap for Ash's native macOS apps. Install Nodio (voice to text), Router (AI routing client), and Kode (coding agent) with one command.">
+  <title>Ash Homebrew Tap: Nodio, Router, Kode & NoteIt</title>
+  <meta name="description" content="Homebrew tap for Ash's native macOS apps. Install Nodio (voice to text), Router (AI routing client), Kode (coding agent), and NoteIt (sticky notes) with one command.">
   <style>
     :root {
       --bg: #f5f5f7;
@@ -280,6 +280,9 @@
     }
     .app-card__icon--kode {
       background: linear-gradient(145deg, #bf5af2 0%, #8944ab 100%);
+    }
+    .app-card__icon--noteit {
+      background: linear-gradient(145deg, #ffd60a 0%, #ff9f0a 100%);
     }
 
     .app-card__name {
@@ -583,7 +586,7 @@
         Homebrew Tap for macOS
       </span>
       <h1 id="hero-title">Native Mac apps.<br>One command away.</h1>
-      <p>Install Nodio, Router, and Kode with Homebrew. Voice-to-text dictation, a local AI routing client, and a coding agent, built for privacy, performance, and speed.</p>
+      <p>Install Nodio, Router, Kode, and NoteIt with Homebrew. Voice-to-text dictation, a local AI routing client, a coding agent, and sticky notes with AI, built for privacy, performance, and speed.</p>
       <div class="hero__actions">
         <a href="#apps" class="btn btn-primary">Browse apps</a>
         <a href="https://github.com/its-ash/tap" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">View on GitHub</a>
@@ -694,6 +697,39 @@
             </div>
           </div>
         </article>
+
+        <article class="app-card" data-app="noteit">
+          <header class="app-card__header">
+            <div class="app-card__icon app-card__icon--noteit" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15.5 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3Z"/>
+                <path d="M15 3v6h6"/>
+                <line x1="7" y1="13" x2="15" y2="13"/>
+                <line x1="7" y1="17" x2="12" y2="17"/>
+              </svg>
+            </div>
+            <h3 class="app-card__name">NoteIt</h3>
+            <p class="app-card__tagline">Sticky notes with AI refine</p>
+          </header>
+          <div class="app-card__body">
+            <p class="app-card__description">Stickies-style notes that float on your desktop, with one-click AI refine through any OpenAI- or Anthropic-compatible provider, including Router.</p>
+            <ul class="app-card__features">
+              <li>Pinned stickies and an All Notes window</li>
+              <li>AI refine with your own provider and model</li>
+              <li>Checklists and Markdown text</li>
+              <li>Optional Firebase sync and local backups</li>
+              <li>Requires macOS 15.0+ (Sequoia)</li>
+            </ul>
+            <div class="app-card__actions">
+              <a href="https://github.com/its-ash/noteit" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
+                View on GitHub
+              </a>
+              <button type="button" class="btn btn-primary app-card__btn" data-install="noteit" aria-label="Show NoteIt installation instructions">
+                Install
+              </button>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
   </main>
@@ -763,6 +799,19 @@
           { comment: "Install Kode", command: "brew install --cask kode" },
         ],
         notes: "Start Router first. Then open Kode from Applications and choose a project folder."
+      },
+      noteit: {
+        name: "NoteIt",
+        cask: "noteit",
+        repo: "its-ash/noteit",
+        desc: "Sticky notes with AI refine",
+        requirements: "Requires macOS 15.0+ (Sequoia)",
+        commands: [
+          { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
+          { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
+          { comment: "Install NoteIt", command: "brew install --cask noteit" },
+        ],
+        notes: "Open NoteIt from Applications. To use AI refine, add a provider and API key in Settings."
       }
     };
 

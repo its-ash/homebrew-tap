@@ -3,10 +3,11 @@ set -euo pipefail
 
 if [[ $# -lt 2 ]]; then
   echo "Usage: $0 <app> <version>"
-  echo "  app: nodio, router, or kode"
+  echo "  app: nodio, router, kode, or noteit"
   echo "  e.g. $0 nodio 1.0.0"
   echo "  e.g. $0 router 1.0.0"
   echo "  e.g. $0 kode 1.0.0"
+  echo "  e.g. $0 noteit 1.0.0"
   exit 1
 fi
 
@@ -35,8 +36,15 @@ case "$APP" in
     DOWNLOAD_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${ZIP_NAME}"
     AUDIT_NAME="kode"
     ;;
+  noteit)
+    REPO="its-ash/noteit"
+    CASK_FILE="Casks/noteit.rb"
+    ZIP_NAME="NoteIt-${VERSION}-macos.zip"
+    DOWNLOAD_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${ZIP_NAME}"
+    AUDIT_NAME="noteit"
+    ;;
   *)
-    echo "Unknown app: $APP. Use 'nodio', 'router', or 'kode'"
+    echo "Unknown app: $APP. Use 'nodio', 'router', 'kode', or 'noteit'"
     exit 1
     ;;
 esac

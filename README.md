@@ -10,6 +10,7 @@ brew trust its-ash/tap
 brew install --cask nodio
 brew install --cask router
 brew install --cask kode
+brew install --cask noteit
 ```
 
 ## Available Casks
@@ -19,6 +20,7 @@ brew install --cask kode
 | [nodio](Casks/nodio.rb) | Voice to text, on your Mac |
 | [router](Casks/router.rb) | Native macOS AI routing client |
 | [kode](Casks/kode.rb) | Native macOS coding agent powered by Router |
+| [noteit](Casks/noteit.rb) | Sticky notes with AI refine |
 
 ## Updating a Cask
 
