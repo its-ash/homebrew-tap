@@ -1,6 +1,6 @@
 cask "noteit" do
-  version "1.0.0"
-  sha256 "ede1a105f2add0f4dc078c0fd42a23f5137d4fee470ec5e39a2b84b3e50d85e1"
+  version "1.0.1"
+  sha256 "83c48eabefc3b9c8d459bab6caa29a50d3ecc5f1dab943df07d31677c07479c4"
 
   url "https://github.com/its-ash/noteit/releases/download/v#{version}/NoteIt-#{version}-macos.zip"
   name "NoteIt"
