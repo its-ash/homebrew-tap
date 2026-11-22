@@ -11,6 +11,8 @@ brew install --cask nodio
 brew install --cask router
 brew install --cask kode
 brew install --cask noteit
+brew install --cask widgets
+brew install --cask cleaner
 ```
 
 ## Available Casks
@@ -21,6 +23,8 @@ brew install --cask noteit
 | [router](Casks/router.rb) | Native macOS AI routing client |
 | [kode](Casks/kode.rb) | Native macOS coding agent powered by Router |
 | [noteit](Casks/noteit.rb) | Sticky notes with AI refine |
+| [widgets](Casks/widgets.rb) | Bento-style desktop widgets |
+| [cleaner](Casks/cleaner.rb) | Find and delete build artifacts, dependency folders and caches |
 
 ## Updating a Cask
 

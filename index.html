@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ash Homebrew Tap: Nodio, Router, Kode & NoteIt</title>
-  <meta name="description" content="Homebrew tap for Ash's native macOS apps. Install Nodio (voice to text), Router (AI routing client), Kode (coding agent), and NoteIt (sticky notes) with one command.">
+  <title>Ash Homebrew Tap: Nodio, Router, Kode, NoteIt, Widgets & Cleaner</title>
+  <meta name="description" content="Homebrew tap for Ash's native macOS apps. Install Nodio (voice to text), Router (AI routing client), Kode (coding agent), NoteIt (sticky notes), Widgets (desktop widgets), and Cleaner (build cache cleaner) with one command.">
   <style>
     :root {
       --bg: #f5f5f7;
@@ -283,6 +283,12 @@
     }
     .app-card__icon--noteit {
       background: linear-gradient(145deg, #ffd60a 0%, #ff9f0a 100%);
+    }
+    .app-card__icon--widgets {
+      background: linear-gradient(145deg, #ff6482 0%, #d1335b 100%);
+    }
+    .app-card__icon--cleaner {
+      background: linear-gradient(145deg, #64d2ff 0%, #0a84a8 100%);
     }
 
     .app-card__name {
@@ -586,7 +592,7 @@
         Homebrew Tap for macOS
       </span>
       <h1 id="hero-title">Native Mac apps.<br>One command away.</h1>
-      <p>Install Nodio, Router, Kode, and NoteIt with Homebrew. Voice-to-text dictation, a local AI routing client, a coding agent, and sticky notes with AI, built for privacy, performance, and speed.</p>
+      <p>Install Nodio, Router, Kode, NoteIt, Widgets, and Cleaner with Homebrew. Voice-to-text dictation, a local AI routing client, a coding agent, sticky notes with AI, desktop widgets, and a build cache cleaner, built for privacy, performance, and speed.</p>
       <div class="hero__actions">
         <a href="#apps" class="btn btn-primary">Browse apps</a>
         <a href="https://github.com/its-ash/tap" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">View on GitHub</a>
@@ -596,7 +602,7 @@
     <section class="apps" id="apps" aria-labelledby="apps-title">
       <div class="apps__heading">
         <h2 id="apps-title">Available Applications</h2>
-        <p>Three native Mac utilities. Install any of them in seconds.</p>
+        <p>Six native Mac utilities. Install any of them in seconds.</p>
       </div>
       <div class="apps-grid">
         <article class="app-card" data-app="nodio">
@@ -730,6 +736,74 @@
             </div>
           </div>
         </article>
+
+        <article class="app-card" data-app="widgets">
+          <header class="app-card__header">
+            <div class="app-card__icon app-card__icon--widgets" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                <rect x="3" y="14" width="18" height="7" rx="1.5"/>
+              </svg>
+            </div>
+            <h3 class="app-card__name">Widgets</h3>
+            <p class="app-card__tagline">Bento-style desktop widgets</p>
+          </header>
+          <div class="app-card__body">
+            <p class="app-card__description">Drag bento tiles onto your desktop: clock, date, weather, calendar, PM2 processes, and live AI usage limits.</p>
+            <ul class="app-card__features">
+              <li>Clock, date, and Open-Meteo weather tiles</li>
+              <li>Calendar widgets with upcoming events</li>
+              <li>AI 5-hour limits for Claude, Gemini, and Codex</li>
+              <li>PM2 process status at a glance</li>
+              <li>2×2, 4×2, and 4×4 sizes with a gallery</li>
+              <li>Requires macOS 15.0+ (Sequoia)</li>
+            </ul>
+            <div class="app-card__actions">
+              <a href="https://github.com/its-ash/widgets" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
+                View on GitHub
+              </a>
+              <button type="button" class="btn btn-primary app-card__btn" data-install="widgets" aria-label="Show Widgets installation instructions">
+                Install
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="app-card" data-app="cleaner">
+          <header class="app-card__header">
+            <div class="app-card__icon app-card__icon--cleaner" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 6h18"/>
+                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                <line x1="10" y1="11" x2="10" y2="17"/>
+                <line x1="14" y1="11" x2="14" y2="17"/>
+              </svg>
+            </div>
+            <h3 class="app-card__name">Cleaner</h3>
+            <p class="app-card__tagline">Reclaim space from build folders</p>
+          </header>
+          <div class="app-card__body">
+            <p class="app-card__description">Finds and removes node_modules, Rust target, Flutter, Gradle, Pods, DerivedData, and tool caches across all your projects. Native app plus a fast Rust engine.</p>
+            <ul class="app-card__features">
+              <li>Scans projects for 30+ build and cache types</li>
+              <li>Global caches: Xcode, Gradle, npm, Cargo, pip, and more</li>
+              <li>Smart pre-selection skips recently used projects</li>
+              <li>Move to Trash or delete permanently</li>
+              <li>History, rules browser, and menu bar extra</li>
+              <li>Requires macOS 14.0+ (Sonoma)</li>
+            </ul>
+            <div class="app-card__actions">
+              <a href="https://github.com/its-ash/cleaner" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
+                View on GitHub
+              </a>
+              <button type="button" class="btn btn-primary app-card__btn" data-install="cleaner" aria-label="Show Cleaner installation instructions">
+                Install
+              </button>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
   </main>
@@ -812,6 +886,32 @@
           { comment: "Install NoteIt", command: "brew install --cask noteit" },
         ],
         notes: "Open NoteIt from Applications. To use AI refine, add a provider and API key in Settings."
+      },
+      widgets: {
+        name: "Widgets",
+        cask: "widgets",
+        repo: "its-ash/widgets",
+        desc: "Bento-style desktop widgets",
+        requirements: "Requires macOS 15.0+ (Sequoia)",
+        commands: [
+          { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
+          { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
+          { comment: "Install Widgets", command: "brew install --cask widgets" },
+        ],
+        notes: "Open Widgets from Applications. Add tiles from the gallery. Grant Calendar access for calendar widgets."
+      },
+      cleaner: {
+        name: "Cleaner",
+        cask: "cleaner",
+        repo: "its-ash/cleaner",
+        desc: "Find and delete build artifacts, dependency folders and caches",
+        requirements: "Requires macOS 14.0+ (Sonoma)",
+        commands: [
+          { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
+          { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
+          { comment: "Install Cleaner", command: "brew install --cask cleaner" },
+        ],
+        notes: "Open Cleaner from Applications, add your project folders in Settings, then press \u2318R to scan."
       }
     };
 

@@ -3,11 +3,13 @@ set -euo pipefail
 
 if [[ $# -lt 2 ]]; then
   echo "Usage: $0 <app> <version>"
-  echo "  app: nodio, router, kode, or noteit"
+  echo "  app: nodio, router, kode, noteit, widgets, or cleaner"
   echo "  e.g. $0 nodio 1.0.0"
   echo "  e.g. $0 router 1.0.0"
   echo "  e.g. $0 kode 1.0.0"
   echo "  e.g. $0 noteit 1.0.0"
+  echo "  e.g. $0 widgets 1.0.0"
+  echo "  e.g. $0 cleaner 0.2.0"
   exit 1
 fi
 
@@ -43,8 +45,22 @@ case "$APP" in
     DOWNLOAD_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${ZIP_NAME}"
     AUDIT_NAME="noteit"
     ;;
+  widgets)
+    REPO="its-ash/widgets"
+    CASK_FILE="Casks/widgets.rb"
+    ZIP_NAME="Widgets-${VERSION}-macos.zip"
+    DOWNLOAD_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${ZIP_NAME}"
+    AUDIT_NAME="widgets"
+    ;;
+  cleaner)
+    REPO="its-ash/cleaner"
+    CASK_FILE="Casks/cleaner.rb"
+    ZIP_NAME="Cleaner-${VERSION}-macos.zip"
+    DOWNLOAD_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${ZIP_NAME}"
+    AUDIT_NAME="cleaner"
+    ;;
   *)
-    echo "Unknown app: $APP. Use 'nodio', 'router', 'kode', or 'noteit'"
+    echo "Unknown app: $APP. Use 'nodio', 'router', 'kode', 'noteit', 'widgets', or 'cleaner'"
     exit 1
     ;;
 esac
