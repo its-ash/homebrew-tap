@@ -12,7 +12,7 @@ cask "router" do
     strategy :github_latest
   end
 
-  depends_on macos: :catalina
+  depends_on macos: ">= :sequoia"
 
   app "Router.app"
 
