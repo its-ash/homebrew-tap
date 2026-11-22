@@ -1,6 +1,6 @@
 cask "router" do
   version "1.0.0"
-  sha256 ""
+  sha256 "c10f54ea8b8eddf15ee3cfe2247011c63e9bc81c154607d1e7ec5fab1ca4e134"
 
   url "https://github.com/its-ash/router/releases/download/v#{version}/Router-#{version}-macos.zip"
   name "Router"
