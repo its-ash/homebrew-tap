@@ -208,11 +208,14 @@
         <p class="section-sub">Install Cleaner from the its-ash Homebrew tap.</p>
         <div class="terminal">
           <div class="term-bar"><i></i><i></i><i></i><span>Terminal</span><button type="button" class="copy" id="copy">Copy</button></div>
-<pre><span class="c"># Add and trust the tap (once)</span>
+<pre><span class="c"># Add the tap (once)</span>
 <span class="p">$ </span>brew tap its-ash/tap
+<span class="c"># Trust the tap (once, for unsigned casks)</span>
 <span class="p">$ </span>brew trust its-ash/tap
 <span class="c"># Install Cleaner</span>
-<span class="p">$ </span>brew install --cask cleaner</pre>
+<span class="p">$ </span>brew install --cask cleaner
+<span class="c"># Exempt from macOS Gatekeeper</span>
+<span class="p">$ </span>xattr -cr /Applications/Cleaner.app</pre>
         </div>
         <p class="after">Open Cleaner from Applications, add your project folders in Settings, then press ⌘R to scan.</p>
       </div>
@@ -229,7 +232,7 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    const cmds = "brew tap its-ash/tap\nbrew trust its-ash/tap\nbrew install --cask cleaner";
+    const cmds = "brew tap its-ash/tap\nbrew trust its-ash/tap\nbrew install --cask cleaner\nxattr -cr /Applications/Cleaner.app";
     const toast = document.getElementById("toast");
     document.getElementById("copy").addEventListener("click", async () => {
       try { await navigator.clipboard.writeText(cmds); toast.textContent = "Copied to clipboard"; }

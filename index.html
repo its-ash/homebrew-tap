@@ -902,9 +902,10 @@
         page: "./widgets/",
         download: "https://github.com/its-ash/homebrew-tap/releases/download/widgets-v2.0.0/Widgets-2.0.0-macos.zip",
         cmds: [
-          { c: "Add and trust the tap (once)", v: "brew tap its-ash/tap" },
-          { c: "", v: "brew trust its-ash/tap" },
+          { c: "Add the tap (once)", v: "brew tap its-ash/tap" },
+          { c: "Trust the tap (once, for unsigned casks)", v: "brew trust its-ash/tap" },
           { c: "Install Widgets", v: "brew install --cask widgets" },
+          { c: "Exempt from macOS Gatekeeper", v: "xattr -cr /Applications/Widgets.app" },
         ],
         note: "Open Widgets from Applications, finish the quick permissions setup, and drag tiles onto your desktop. Sign in with Google to sync via Firebase."
       },
@@ -913,9 +914,10 @@
         page: "./nodio/",
         download: "https://github.com/its-ash/Nodio/releases/latest",
         cmds: [
-          { c: "Add and trust the tap (once)", v: "brew tap its-ash/tap" },
-          { c: "", v: "brew trust its-ash/tap" },
+          { c: "Add the tap (once)", v: "brew tap its-ash/tap" },
+          { c: "Trust the tap (once, for unsigned casks)", v: "brew trust its-ash/tap" },
           { c: "Install Nodio", v: "brew install --cask nodio" },
+          { c: "Exempt from macOS Gatekeeper", v: "xattr -cr /Applications/Nodio.app" },
         ],
         note: "On first launch, grant Microphone and Accessibility permissions in System Settings to start dictating with Fn."
       },
@@ -924,9 +926,10 @@
         page: "./cleaner/",
         download: "https://github.com/its-ash/cleaner/releases/latest",
         cmds: [
-          { c: "Add and trust the tap (once)", v: "brew tap its-ash/tap" },
-          { c: "", v: "brew trust its-ash/tap" },
+          { c: "Add the tap (once)", v: "brew tap its-ash/tap" },
+          { c: "Trust the tap (once, for unsigned casks)", v: "brew trust its-ash/tap" },
           { c: "Install Cleaner", v: "brew install --cask cleaner" },
+          { c: "Exempt from macOS Gatekeeper", v: "xattr -cr /Applications/Cleaner.app" },
         ],
         note: "Open Cleaner from Applications, add your project folders in Settings, then press ⌘R to scan."
       },
@@ -935,11 +938,12 @@
         page: "#apps",
         download: "https://github.com/its-ash/homebrew-tap/releases",
         cmds: [
-          { c: "Add and trust the tap (once)", v: "brew tap its-ash/tap" },
-          { c: "", v: "brew trust its-ash/tap" },
+          { c: "Add the tap (once)", v: "brew tap its-ash/tap" },
+          { c: "Trust the tap (once, for unsigned casks)", v: "brew trust its-ash/tap" },
           { c: "Install Widgets, Nodio, and Cleaner", v: "brew install --cask widgets nodio cleaner" },
+          { c: "Exempt from macOS Gatekeeper", v: "xattr -cr /Applications/Widgets.app /Applications/Nodio.app /Applications/Cleaner.app" },
         ],
-        note: "All three casks automatically remove macOS Gatekeeper quarantine attributes on install."
+        note: "The xattr command clears macOS Gatekeeper quarantine flags so all three unsigned apps open immediately."
       }
     };
 
@@ -959,7 +963,7 @@
     function renderCommands(list) {
       return list.map(item => {
         const comment = item.c ? `<span class="t-c"># ${item.c}</span>\n` : "";
-        const cmd = item.v.replace(/^brew\b/, '<span class="t-k">brew</span>');
+        const cmd = item.v.replace(/^(brew|xattr)\b/, '<span class="t-k">$1</span>');
         return `${comment}<span class="t-p">$ </span>${cmd}`;
       }).join("\n");
     }

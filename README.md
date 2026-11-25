@@ -5,11 +5,22 @@ Homebrew Casks and landing pages for Ash's native macOS apps at [tap.itsash.in](
 ## Usage
 
 ```bash
+# Add the tap (once)
 brew tap its-ash/tap
+# Trust the tap (once, for unsigned casks)
 brew trust its-ash/tap
+
+# Install Widgets + exempt from Gatekeeper
 brew install --cask widgets
+xattr -cr /Applications/Widgets.app
+
+# Install Nodio + exempt from Gatekeeper
 brew install --cask nodio
+xattr -cr /Applications/Nodio.app
+
+# Install Cleaner + exempt from Gatekeeper
 brew install --cask cleaner
+xattr -cr /Applications/Cleaner.app
 ```
 
 ## Available Casks

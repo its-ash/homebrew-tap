@@ -980,11 +980,14 @@
             <span>Terminal</span>
             <button type="button" class="copy-btn" id="copy-brew">Copy</button>
           </div>
-<pre><span class="c"># Add and trust the tap (once)</span>
+<pre><span class="c"># Add the tap (once)</span>
 <span class="p">$ </span>brew tap its-ash/tap
+<span class="c"># Trust the tap (once, for unsigned casks)</span>
 <span class="p">$ </span>brew trust its-ash/tap
 <span class="c"># Install Widgets</span>
-<span class="p">$ </span>brew install --cask widgets</pre>
+<span class="p">$ </span>brew install --cask widgets
+<span class="c"># Exempt from macOS Gatekeeper</span>
+<span class="p">$ </span>xattr -cr /Applications/Widgets.app</pre>
         </div>
 
         <p class="install-note">
@@ -1053,7 +1056,7 @@
     });
 
     // Copy buttons
-    const brewCmds = "brew tap its-ash/tap\nbrew trust its-ash/tap\nbrew install --cask widgets";
+    const brewCmds = "brew tap its-ash/tap\nbrew trust its-ash/tap\nbrew install --cask widgets\nxattr -cr /Applications/Widgets.app";
     document.getElementById("copy-brew").addEventListener("click", async () => {
       try { await navigator.clipboard.writeText(brewCmds); showToast("Copied Homebrew commands"); }
       catch { showToast("Copy failed — select manually"); }
