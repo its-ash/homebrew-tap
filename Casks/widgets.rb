@@ -1,6 +1,6 @@
 cask "widgets" do
-  version "1.0.1"
-  sha256 "21c15b171f80780d5196414b3bab5f9c8c4a95e6cf5174ead75462778c1454ce"
+  version "2.0.0"
+  sha256 "9add9f4aea491fb1417f9a1f9376b4683358fd9f7fb7858f154f1b4f50622252"
 
   url "https://github.com/its-ash/widgets/releases/download/v#{version}/Widgets-#{version}-macos.zip"
   name "Widgets"
