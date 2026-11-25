@@ -14,6 +14,10 @@ brew trust its-ash/tap
 brew install --cask widgets
 xattr -cr /Applications/Widgets.app
 
+# Install xsh (app + CLI) + exempt from Gatekeeper
+brew install --cask xsh
+xattr -cr /Applications/xsh.app
+
 # Install Nodio + exempt from Gatekeeper
 brew install --cask nodio
 xattr -cr /Applications/Nodio.app
@@ -28,6 +32,7 @@ xattr -cr /Applications/Cleaner.app
 | Cask | Page | Description |
 | --- | --- | --- |
 | [widgets](Casks/widgets.rb) | [tap.itsash.in/widgets](https://tap.itsash.in/widgets/) | Rainbow Bento desktop widgets, AI sticky notes, local AI router & tools |
+| [xsh](Casks/xsh.rb) | [tap.itsash.in/xsh](https://tap.itsash.in/xsh/) | AI-native terminal app and shell for macOS (Swift + Rust) |
 | [nodio](Casks/nodio.rb) | [tap.itsash.in/nodio](https://tap.itsash.in/nodio/) | On-device Whisper voice to text for Mac |
 | [cleaner](Casks/cleaner.rb) | [tap.itsash.in/cleaner](https://tap.itsash.in/cleaner/) | Find and delete build artifacts, dependency folders, and caches |
 

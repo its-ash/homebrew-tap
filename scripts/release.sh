@@ -3,10 +3,11 @@ set -euo pipefail
 
 if [[ $# -lt 2 ]]; then
   echo "Usage: $0 <app> <version>"
-  echo "  app: nodio, widgets, or cleaner"
+  echo "  app: nodio, widgets, cleaner, or xsh"
   echo "  e.g. $0 nodio 1.0.0"
-  echo "  e.g. $0 widgets 2.0.0"
+  echo "  e.g. $0 widgets 2.0.1"
   echo "  e.g. $0 cleaner 0.2.1"
+  echo "  e.g. $0 xsh 0.1.6"
   exit 1
 fi
 
@@ -35,8 +36,15 @@ case "$APP" in
     DOWNLOAD_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${ZIP_NAME}"
     AUDIT_NAME="cleaner"
     ;;
+  xsh)
+    REPO="its-ash/xsh"
+    CASK_FILE="Casks/xsh.rb"
+    ZIP_NAME="xsh-v${VERSION}-aarch64-apple-darwin.dmg"
+    DOWNLOAD_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${ZIP_NAME}"
+    AUDIT_NAME="xsh"
+    ;;
   *)
-    echo "Unknown app: $APP. Use 'nodio', 'widgets', or 'cleaner'"
+    echo "Unknown app: $APP. Use 'nodio', 'widgets', 'cleaner', or 'xsh'"
     exit 1
     ;;
 esac

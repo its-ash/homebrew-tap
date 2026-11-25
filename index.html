@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ash for Mac — Widgets, Nodio &amp; Cleaner</title>
-  <meta name="description" content="Thoughtful native Mac apps built in Swift and Rust. Install Widgets, Nodio, and Cleaner in one command with Homebrew.">
+  <title>Ash for Mac — Widgets, xsh, Nodio &amp; Cleaner</title>
+  <meta name="description" content="Thoughtful native Mac apps built in Swift and Rust. Install Widgets, xsh, Nodio, and Cleaner in one command with Homebrew.">
   <meta name="color-scheme" content="light dark">
-  <meta property="og:title" content="Ash for Mac — Widgets, Nodio &amp; Cleaner">
-  <meta property="og:description" content="Three native Mac utilities crafted for speed, clarity, and privacy. One Homebrew command away.">
+  <meta property="og:title" content="Ash for Mac — Widgets, xsh, Nodio &amp; Cleaner">
+  <meta property="og:description" content="Four native Mac utilities crafted for speed, clarity, and privacy. One Homebrew command away.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tap.itsash.in/">
   <link rel="canonical" href="https://tap.itsash.in/">
@@ -274,6 +274,61 @@
         color: #f5f5f7;
       }
     }
+    .product-tile--hero-dark {
+      grid-column: span 2;
+      background: linear-gradient(155deg, #111216 0%, #181920 55%, #0d0e11 100%);
+      color: #f5f5f7;
+      padding: 56px 56px 48px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      align-items: center;
+      gap: 44px;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    .product-tile--hero-dark .p-badge { color: #64d2ff; }
+    .mini-xsh {
+      border-radius: 20px;
+      overflow: clip;
+      background: #1a1b1f;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.48);
+      text-align: start;
+      font-family: var(--mono);
+    }
+    .mini-xsh__bar {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 11px 14px;
+      background: linear-gradient(#34353a, #28292d);
+      border-block-end: 1px solid #000;
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 600;
+      color: #a1a1a6;
+    }
+    .mini-xsh__bar i { inline-size: 10px; block-size: 10px; border-radius: 50%; background: #ff5f57; }
+    .mini-xsh__bar i:nth-child(2) { background: #febc2e; }
+    .mini-xsh__bar i:nth-child(3) { background: #28c840; }
+    .mini-xsh__bar span { margin-inline: auto; padding-inline-end: 36px; }
+    .mini-xsh__panes {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+    .mini-xsh__pane {
+      padding: 14px 15px 16px;
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: #e8e8ed;
+      white-space: pre-wrap;
+    }
+    .mini-xsh__pane + .mini-xsh__pane { border-inline-start: 1px solid rgba(255, 255, 255, 0.08); }
+    .mini-xsh__tag { display: block; font-size: 10px; color: #8e8e93; margin-block-end: 8px; }
+    .xs-p { color: #64d2ff; }
+    .xs-b { color: #bf5af2; }
+    .xs-ai { color: #ffd60a; }
+    .xs-ok { color: #30d158; }
+    .xs-dim { color: #8e8e93; }
 
     .product-tile--light {
       background: var(--card-light);
@@ -631,22 +686,28 @@
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
     @media (max-width: 920px) {
-      .product-tile--hero {
+      .product-tile--hero,
+      .product-tile--hero-dark {
         grid-template-columns: 1fr;
         padding: 42px 28px 36px;
         text-align: center;
       }
-      .product-tile--hero .p-desc { margin-inline: auto; }
-      .product-tile--hero .p-links { justify-content: center; }
+      .product-tile--hero .p-desc,
+      .product-tile--hero-dark .p-desc { margin-inline: auto; }
+      .product-tile--hero .p-links,
+      .product-tile--hero-dark .p-links { justify-content: center; }
       .product-stack { grid-template-columns: 1fr; }
-      .product-tile--hero { grid-column: span 1; }
+      .product-tile--hero,
+      .product-tile--hero-dark { grid-column: span 1; }
       .pillars__grid { grid-template-columns: 1fr; gap: 28px; }
     }
     @media (max-width: 600px) {
-      .gnav__links li:nth-child(n+4) { display: none; }
+      .gnav__links li:nth-child(n+5) { display: none; }
       .hero { padding-block: 72px 48px; }
       .mini-desktop { grid-template-columns: repeat(2, 1fr); }
       .mw--2, .mw--3, .mw--4 { grid-column: span 2; }
+      .mini-xsh__panes { grid-template-columns: 1fr; }
+      .mini-xsh__pane + .mini-xsh__pane { border-inline-start: 0; border-block-start: 1px solid rgba(255, 255, 255, 0.08); }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition: none !important; animation: none !important; }
@@ -664,6 +725,7 @@
       <nav aria-label="Primary">
         <ul class="gnav__links">
           <li><a href="./widgets/">Widgets</a></li>
+          <li><a href="./xsh/">xsh</a></li>
           <li><a href="./nodio/">Nodio</a></li>
           <li><a href="./cleaner/">Cleaner</a></li>
           <li><a href="#install">Install</a></li>
@@ -678,7 +740,7 @@
       <div class="wrap">
         <p class="hero__eyebrow">Homebrew Tap for macOS</p>
         <h1 id="hero-title">Thoughtful Mac apps.<br>Built to feel native.</h1>
-        <p class="hero__sub">Three focused utilities crafted in Swift and Rust for Apple Silicon. Install and update any of them with a single command.</p>
+        <p class="hero__sub">Four focused utilities crafted in Swift and Rust for Apple Silicon. Install and update any of them with a single command.</p>
         <div class="hero__actions">
           <a href="#apps" class="pill-btn pill-btn--primary">Explore apps</a>
           <a href="#install" class="chevron-link">Quick install <span aria-hidden="true">›</span></a>
@@ -741,6 +803,38 @@
                 <span class="mw__kicker">Paste Board · ⌘V</span>
                 <span class="mw__line">9 text &amp; image slots</span>
                 <span class="mw__line" style="opacity:0.55">Click to copy</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Flagship Dark: xsh -->
+          <article class="product-tile product-tile--hero-dark">
+            <div>
+              <span class="p-badge">AI Terminal &amp; Shell</span>
+              <h2 class="p-title">xsh</h2>
+              <p class="p-tagline">A terminal that understands you.</p>
+              <p class="p-desc">A native AppKit terminal and Rust shell with AI command generation, safety guard, tmux-style split panes &amp; multiplexer, declarative bundles, fuzzy completions, and XChaCha20 encrypted history.</p>
+              <div class="p-links">
+                <a href="./xsh/" class="pill-btn pill-btn--primary pill-btn--sm">Learn more</a>
+                <button type="button" class="pill-btn pill-btn--outline pill-btn--sm" data-install="xsh">Install</button>
+              </div>
+              <p class="p-meta">macOS 14.0 Sonoma or later · Apple Silicon · Rust + Swift</p>
+            </div>
+
+            <div class="mini-xsh" aria-hidden="true">
+              <div class="mini-xsh__bar">
+                <i></i><i></i><i></i>
+                <span>xsh — ~/code/app</span>
+              </div>
+              <div class="mini-xsh__panes">
+<div class="mini-xsh__pane"><span class="mini-xsh__tag">%1 ● ai agent</span><span class="xs-p">~/app</span> <span class="xs-b">main*</span> ❯ <span class="xs-ai">5 largest files</span>
+<span class="xs-dim">✦ suggested</span>
+find . -type f -exec du -h {} + | sort -rh | head -5
+<span class="xs-dim">[Enter] run · [e] edit</span></div>
+<div class="mini-xsh__pane"><span class="mini-xsh__tag">%2 cargo test</span><span class="xs-p">~/app</span> <span class="xs-b">main*</span> ❯ cargo test
+parser::pipes ... <span class="xs-ok">ok</span>
+history::search ... <span class="xs-ok">ok</span>
+<span class="xs-ok">42 passed; 0 failed</span></div>
               </div>
             </div>
           </article>
@@ -837,9 +931,10 @@
 
         <div class="seg-bar" role="tablist" aria-label="Select app to install">
           <button type="button" role="tab" aria-selected="true" data-tab="widgets">Widgets</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="xsh">xsh</button>
           <button type="button" role="tab" aria-selected="false" data-tab="nodio">Nodio</button>
           <button type="button" role="tab" aria-selected="false" data-tab="cleaner">Cleaner</button>
-          <button type="button" role="tab" aria-selected="false" data-tab="all">All three</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="all">All four</button>
         </div>
 
         <div class="terminal">
@@ -860,6 +955,7 @@
       <p>Built by <a href="https://itsash.in" target="_blank" rel="noopener noreferrer">Ashvini Jangid</a>.</p>
       <div class="footer__links">
         <a href="./widgets/">Widgets</a>
+        <a href="./xsh/">xsh</a>
         <a href="./nodio/">Nodio</a>
         <a href="./cleaner/">Cleaner</a>
         <a href="https://github.com/its-ash/homebrew-tap" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -900,14 +996,26 @@
       widgets: {
         name: "Widgets",
         page: "./widgets/",
-        download: "https://github.com/its-ash/homebrew-tap/releases/download/widgets-v2.0.0/Widgets-2.0.0-macos.zip",
+        download: "https://github.com/its-ash/homebrew-tap/releases/download/widgets-v2.0.1/Widgets-2.0.1-macos.zip",
         cmds: [
           { c: "Add the tap (once)", v: "brew tap its-ash/tap" },
           { c: "Trust the tap (once, for unsigned casks)", v: "brew trust its-ash/tap" },
           { c: "Install Widgets", v: "brew install --cask widgets" },
           { c: "Exempt from macOS Gatekeeper", v: "xattr -cr /Applications/Widgets.app" },
         ],
-        note: "Open Widgets from Applications, finish the quick permissions setup, and drag tiles onto your desktop. Sign in with Google to sync via Firebase."
+        note: "Open Widgets from Applications, finish the quick permissions setup, and drag tiles onto your desktop. Built-in auto-updates keep Widgets current."
+      },
+      xsh: {
+        name: "xsh",
+        page: "./xsh/",
+        download: "https://github.com/its-ash/xsh/releases/download/v0.1.6/xsh-v0.1.6-aarch64-apple-darwin.dmg",
+        cmds: [
+          { c: "Add the tap (once)", v: "brew tap its-ash/tap" },
+          { c: "Trust the tap (once, for unsigned casks)", v: "brew trust its-ash/tap" },
+          { c: "Install xsh (app + CLI)", v: "brew install --cask xsh" },
+          { c: "Exempt from macOS Gatekeeper", v: "xattr -cr /Applications/xsh.app" },
+        ],
+        note: "Installs xsh.app in Applications and links the xsh shell binary to your PATH. Press ⌘, inside xsh for Settings and themes."
       },
       nodio: {
         name: "Nodio",
@@ -934,16 +1042,16 @@
         note: "Open Cleaner from Applications, add your project folders in Settings, then press ⌘R to scan."
       },
       all: {
-        name: "All three apps",
+        name: "All four apps",
         page: "#apps",
         download: "https://github.com/its-ash/homebrew-tap/releases",
         cmds: [
           { c: "Add the tap (once)", v: "brew tap its-ash/tap" },
           { c: "Trust the tap (once, for unsigned casks)", v: "brew trust its-ash/tap" },
-          { c: "Install Widgets, Nodio, and Cleaner", v: "brew install --cask widgets nodio cleaner" },
-          { c: "Exempt from macOS Gatekeeper", v: "xattr -cr /Applications/Widgets.app /Applications/Nodio.app /Applications/Cleaner.app" },
+          { c: "Install Widgets, xsh, Nodio, and Cleaner", v: "brew install --cask widgets xsh nodio cleaner" },
+          { c: "Exempt from macOS Gatekeeper", v: "xattr -cr /Applications/Widgets.app /Applications/xsh.app /Applications/Nodio.app /Applications/Cleaner.app" },
         ],
-        note: "The xattr command clears macOS Gatekeeper quarantine flags so all three unsigned apps open immediately."
+        note: "The xattr command clears macOS Gatekeeper quarantine flags so all four unsigned apps open immediately."
       }
     };
 
@@ -1025,13 +1133,21 @@
     overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
     document.addEventListener("keydown", e => { if (e.key === "Escape" && overlay.getAttribute("aria-hidden") === "false") closeModal(); });
 
-    // Dynamically update latest Widgets download link from tap releases
+    // Dynamically update latest Widgets and xsh download links
     fetch("https://api.github.com/repos/its-ash/homebrew-tap/releases")
       .then(r => r.ok ? r.json() : [])
       .then(list => {
         const rel = Array.isArray(list) ? list.find(x => x.tag_name && x.tag_name.startsWith("widgets-v")) : null;
         const asset = rel && (rel.assets || []).find(a => a.name && a.name.endsWith(".zip"));
         if (asset && asset.browser_download_url) APPS.widgets.download = asset.browser_download_url;
+      })
+      .catch(() => {});
+
+    fetch("https://api.github.com/repos/its-ash/xsh/releases/latest")
+      .then(r => r.ok ? r.json() : null)
+      .then(rel => {
+        const asset = rel && (rel.assets || []).find(a => a.name && a.name.endsWith(".dmg"));
+        if (asset && asset.browser_download_url) APPS.xsh.download = asset.browser_download_url;
       })
       .catch(() => {});
   </script>
