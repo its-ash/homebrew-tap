@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title">
+<title id="title">Cleaner</title>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0F766E"/><stop offset="1" stop-color="#2563EB"/></linearGradient>
+<linearGradient id="fr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#DBEAFE"/></linearGradient>
+<filter id="sh" x="-20%" y="-20%" width="140%" height="150%"><feGaussianBlur stdDeviation="16"/></filter>
+</defs>
+<rect x="100" y="124" width="824" height="824" rx="185" fill="#000000" opacity="0.3" filter="url(#sh)"/>
+<rect x="100" y="100" width="824" height="824" rx="185" fill="url(#bg)"/>
+<path d="M288 310H440Q470 310 486 336L500 360H736Q772 360 772 396V660Q772 700 732 700H292Q252 700 252 660V346Q252 310 288 310Z" fill="#93C5FD"/>
+<rect x="252" y="420" width="520" height="290" rx="44" fill="url(#fr)"/>
+<path d="M740 200Q754 330 880 344Q754 358 740 488Q726 358 600 344Q726 330 740 200Z" fill="#FBBF24"/>
+<path d="M270 235Q276 280 320 286Q276 292 270 337Q264 292 220 286Q264 280 270 235Z" fill="#FBBF24"/>
+</svg>

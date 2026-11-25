@@ -3,1003 +3,1033 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ash Homebrew Tap: Nodio, Kode, Widgets & Cleaner</title>
-  <meta name="description" content="Homebrew tap for Ash's native macOS apps. Install Nodio (voice to text), Kode (coding agent), Widgets (bento desktop widgets, AI sticky notes & local AI router), and Cleaner (build cache cleaner) with one command.">
+  <title>Ash for Mac — Widgets, Nodio &amp; Cleaner</title>
+  <meta name="description" content="Thoughtful native Mac apps built in Swift and Rust. Install Widgets, Nodio, and Cleaner in one command with Homebrew.">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:title" content="Ash for Mac — Widgets, Nodio &amp; Cleaner">
+  <meta property="og:description" content="Three native Mac utilities crafted for speed, clarity, and privacy. One Homebrew command away.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tap.itsash.in/">
+  <link rel="canonical" href="https://tap.itsash.in/">
+  <link rel="icon" href="widgets/icon-web.svg" type="image/svg+xml">
   <style>
     :root {
-      --bg: #f5f5f7;
-      --surface: #ffffff;
-      --surface-elevated: #fbfbfd;
-      --text-primary: #1d1d1f;
-      --text-secondary: #424245;
-      --text-tertiary: #6e6e73;
+      color-scheme: light dark;
+      --bg: #ffffff;
+      --bg-subtle: #f5f5f7;
+      --surface: #fbfbfd;
+      --card-light: #f5f5f7;
+      --card-dark: #161617;
+      --ink: #1d1d1f;
+      --ink-2: #424245;
+      --ink-3: #6e6e73;
       --accent: #0071e3;
       --accent-hover: #0077ed;
-      --accent-soft: rgba(0, 113, 227, 0.08);
-      --border: #d2d2d7;
-      --border-soft: rgba(0, 0, 0, 0.06);
-      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
-      --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.14);
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 18px;
-      --radius-xl: 24px;
-      --radius-2xl: 32px;
-      --space-1: 4px;
-      --space-2: 8px;
-      --space-3: 16px;
-      --space-4: 24px;
-      --space-5: 32px;
-      --space-6: 48px;
-      --space-7: 64px;
-      --space-8: 96px;
-      --space-9: 128px;
-      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      --font-mono: "SF Mono", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", monospace;
-      --transition-fast: 120ms ease-out;
-      --transition-normal: 220ms ease-out;
-      --transition-slow: 320ms ease-out;
+      --link: #0066cc;
+      --hairline: rgba(0, 0, 0, 0.08);
+      --nav-bg: rgba(251, 251, 253, 0.8);
+      --term-bg: #161617;
+      --modal-bg: #ffffff;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --mono: "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --ease: cubic-bezier(0.28, 0.11, 0.32, 1);
     }
 
-    @media (prefers-reduced-motion: reduce) {
+    @media (prefers-color-scheme: dark) {
       :root {
-        --transition-fast: 0ms;
-        --transition-normal: 0ms;
-        --transition-slow: 0ms;
+        --bg: #000000;
+        --bg-subtle: #111113;
+        --surface: #161617;
+        --card-light: #1c1c1e;
+        --card-dark: #0c0c0e;
+        --ink: #f5f5f7;
+        --ink-2: #d2d2d7;
+        --ink-3: #86868b;
+        --accent: #2997ff;
+        --accent-hover: #47a6ff;
+        --link: #2997ff;
+        --hairline: rgba(255, 255, 255, 0.12);
+        --nav-bg: rgba(22, 22, 23, 0.8);
+        --modal-bg: #1c1c1e;
       }
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
-      font-family: var(--font-sans);
+      font-family: var(--font);
       background: var(--bg);
-      color: var(--text-primary);
-      line-height: 1.47059;
+      color: var(--ink);
       font-size: 17px;
-      font-weight: 400;
+      line-height: 1.47059;
       letter-spacing: -0.022em;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      overflow-x: clip;
     }
 
-    a { color: var(--accent); text-decoration: none; transition: color var(--transition-fast); }
-    a:hover { color: var(--accent-hover); }
-    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+    img, svg { display: block; }
 
-    .sr-only {
-      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    .wrap {
+      max-inline-size: 1080px;
+      margin-inline: auto;
+      padding-inline: 24px;
+    }
+    .wrap--wide {
+      max-inline-size: 1200px;
+      margin-inline: auto;
+      padding-inline: 20px;
     }
 
-    /* ===== Nav ===== */
-    .site-nav {
+    /* ===== Apple-Style Global Nav ===== */
+    .gnav {
       position: sticky;
-      top: 0;
-      z-index: 900;
-      background: rgba(245, 245, 247, 0.72);
+      inset-block-start: 0;
+      z-index: 100;
+      background: var(--nav-bg);
       backdrop-filter: saturate(180%) blur(20px);
       -webkit-backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 1px solid var(--border-soft);
+      border-block-end: 1px solid var(--hairline);
     }
-    .site-nav__inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 var(--space-5);
-      height: 48px;
+    .gnav__inner {
+      block-size: 44px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 20px;
     }
-    .site-nav__brand {
+    .gnav__brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--display);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+    }
+    .gnav__brand:hover { text-decoration: none; }
+    .gnav__links {
+      list-style: none;
       display: flex;
       align-items: center;
-      gap: var(--space-2);
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--text-primary);
-    }
-    .site-nav__brand:hover { color: var(--text-primary); }
-    .site-nav__link {
-      font-size: 14px;
+      gap: 28px;
+      font-size: 12px;
       font-weight: 400;
-      color: var(--text-secondary);
+      letter-spacing: -0.01em;
     }
-    .site-nav__link:hover { color: var(--accent); }
+    .gnav__links a { color: var(--ink-2); transition: color 180ms var(--ease); }
+    .gnav__links a:hover { color: var(--ink); text-decoration: none; }
 
-    /* ===== Hero ===== */
+    /* ===== Keynote Hero ===== */
     .hero {
-      padding: var(--space-9) var(--space-5) var(--space-7);
+      padding-block: 104px 72px;
       text-align: center;
-      max-width: 980px;
-      margin: 0 auto;
     }
     .hero__eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      padding: var(--space-1) var(--space-3);
-      background: var(--accent-soft);
-      border-radius: var(--radius-md);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--accent);
-      margin-bottom: var(--space-5);
-      letter-spacing: -0.01em;
+      font-family: var(--display);
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      color: var(--ink-3);
+      margin-block-end: 10px;
     }
-    .hero__eyebrow svg { width: 14px; height: 14px; }
     .hero h1 {
-      font-family: var(--font-display);
-      font-size: clamp(44px, 6vw, 72px);
-      font-weight: 700;
-      line-height: 1.05;
-      letter-spacing: -0.025em;
-      color: var(--text-primary);
-      margin-bottom: var(--space-4);
+      font-family: var(--display);
+      font-size: clamp(46px, 7.2vw, 80px);
+      font-weight: 600;
+      line-height: 1.04;
+      letter-spacing: -0.036em;
+      color: var(--ink);
+      max-inline-size: 860px;
+      margin-inline: auto;
     }
-    .hero p {
-      font-size: clamp(19px, 2vw, 24px);
+    .hero__sub {
+      max-inline-size: 620px;
+      margin: 22px auto 0;
+      font-family: var(--display);
+      font-size: clamp(19px, 2.2vw, 24px);
       font-weight: 400;
       line-height: 1.38;
-      letter-spacing: 0.004em;
-      color: var(--text-secondary);
-      max-width: 720px;
-      margin: 0 auto var(--space-7);
+      letter-spacing: -0.01em;
+      color: var(--ink-3);
     }
     .hero__actions {
+      margin-block-start: 34px;
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
       justify-content: center;
-      gap: var(--space-3);
+      flex-wrap: wrap;
+      gap: 16px;
     }
 
-    .btn {
+    .pill-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: var(--space-2);
-      padding: 0 var(--space-4);
-      font-family: var(--font-sans);
-      font-size: 17px;
-      font-weight: 400;
-      line-height: 1;
+      gap: 6px;
+      min-block-size: 44px;
+      padding-inline: 22px;
+      border-radius: 980px;
+      font: 400 17px/1 var(--font);
       letter-spacing: -0.022em;
-      border-radius: var(--radius-lg);
       border: 1px solid transparent;
       cursor: pointer;
-      transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), color var(--transition-fast);
-      text-decoration: none;
-      min-height: 44px;
-      -webkit-tap-highlight-color: transparent;
+      transition: background 200ms var(--ease), color 200ms var(--ease), border-color 200ms var(--ease), transform 140ms var(--ease);
     }
-    .btn-primary {
+    .pill-btn:hover { text-decoration: none; }
+    .pill-btn:active { transform: scale(0.985); }
+    .pill-btn--primary {
       background: var(--accent);
       color: #fff;
-      padding: 0 var(--space-5);
     }
-    .btn-primary:hover { background: var(--accent-hover); color: #fff; }
-    .btn-primary:active { transform: scale(0.98); }
-    .btn-secondary {
-      background: var(--surface);
-      color: var(--accent);
-      border-color: var(--border);
-    }
-    .btn-secondary:hover { background: #f5f5f7; border-color: var(--accent); }
-    .btn-ghost {
+    .pill-btn--primary:hover { background: var(--accent-hover); color: #fff; }
+    .pill-btn--outline {
       background: transparent;
       color: var(--accent);
+      border-color: var(--accent);
     }
-    .btn-ghost:hover { background: var(--accent-soft); }
-
-    /* ===== Apps ===== */
-    .apps {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 var(--space-5) var(--space-9);
+    .pill-btn--outline:hover { background: var(--accent); color: #fff; }
+    .pill-btn--sm {
+      min-block-size: 36px;
+      padding-inline: 16px;
+      font-size: 14px;
     }
-    .apps__heading {
-      text-align: center;
-      margin-bottom: var(--space-7);
-    }
-    .apps__heading h2 {
-      font-family: var(--font-display);
-      font-size: clamp(34px, 4vw, 48px);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.08;
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-    }
-    .apps__heading p {
-      font-size: 19px;
-      color: var(--text-secondary);
-      max-width: 560px;
-      margin: 0 auto;
-    }
-
-    .apps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--space-5);
-    }
-    @media (max-width: 820px) {
-      .apps-grid { grid-template-columns: 1fr; }
-    }
-
-    .app-card {
-      background: var(--surface);
-      border-radius: var(--radius-2xl);
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--border-soft);
-      overflow: hidden;
-      transition: box-shadow var(--transition-normal), transform var(--transition-normal);
-      display: flex;
-      flex-direction: column;
-    }
-    .app-card:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-3px);
-    }
-    .app-card:focus-within {
-      box-shadow: var(--shadow-md), 0 0 0 3px rgba(0, 113, 227, 0.25);
-    }
-
-    .app-card__header {
-      padding: var(--space-6) var(--space-6) var(--space-4);
-      text-align: center;
-      background: linear-gradient(180deg, var(--surface-elevated) 0%, var(--surface) 100%);
-      border-bottom: 1px solid var(--border-soft);
-    }
-    .app-card__icon {
-      width: 84px;
-      height: 84px;
-      border-radius: 20px;
-      margin: 0 auto var(--space-4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    }
-    .app-card__icon svg {
-      width: 42px;
-      height: 42px;
-      color: #fff;
-    }
-    .app-card__icon--nodio {
-      background: linear-gradient(145deg, #0a84ff 0%, #0051d5 100%);
-    }
-    .app-card__icon--kode {
-      background: linear-gradient(145deg, #bf5af2 0%, #8944ab 100%);
-    }
-    .app-card__icon--widgets {
-      background: linear-gradient(145deg, #1d82ff 0%, #7950ff 100%);
-    }
-    .app-card__icon--cleaner {
-      background: linear-gradient(145deg, #64d2ff 0%, #0a84a8 100%);
-    }
-
-    .app-card__name {
-      font-family: var(--font-display);
-      font-size: 26px;
-      font-weight: 600;
-      line-height: 1.15;
-      letter-spacing: 0.004em;
-      color: var(--text-primary);
-      margin-bottom: var(--space-1);
-    }
-    .app-card__tagline {
-      font-size: 17px;
-      color: var(--text-secondary);
-    }
-
-    .app-card__body {
-      padding: var(--space-5) var(--space-6) var(--space-6);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .app-card__description {
-      font-size: 17px;
-      color: var(--text-secondary);
-      line-height: 1.47;
-      margin-bottom: var(--space-5);
-    }
-    .app-card__features {
-      list-style: none;
-      margin-bottom: var(--space-5);
-      flex: 1;
-    }
-    .app-card__features li {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-3);
-      font-size: 15px;
-      color: var(--text-tertiary);
-      line-height: 1.4;
-      padding: var(--space-1) 0;
-    }
-    .app-card__features li::before {
-      content: "";
-      flex-shrink: 0;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--text-tertiary);
-      opacity: 0.6;
-      margin-top: 8px;
-    }
-    .app-card__actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-3);
-      padding-top: var(--space-4);
-      border-top: 1px solid var(--border-soft);
-    }
-    .app-card__btn { flex: 1; min-width: 120px; }
-
-    /* ===== Modal / Terminal ===== */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.32);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: var(--space-4);
-      z-index: 1000;
-      opacity: 0;
-      transition: opacity var(--transition-normal);
-    }
-    .modal-overlay[aria-hidden="false"] {
-      display: flex;
-      opacity: 1;
-    }
-    .modal {
-      background: var(--surface);
-      border-radius: var(--radius-2xl);
-      box-shadow: var(--shadow-lg);
-      max-width: 620px;
-      width: 100%;
-      max-height: 90vh;
-      overflow: hidden;
-      transform: scale(0.96) translateY(8px);
-      transition: transform var(--transition-normal);
-      display: flex;
-      flex-direction: column;
-    }
-    .modal-overlay[aria-hidden="false"] .modal {
-      transform: scale(1) translateY(0);
-    }
-    .modal__header {
-      padding: var(--space-4) var(--space-5);
-      border-bottom: 1px solid var(--border-soft);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-3);
-    }
-    .modal__title {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--text-primary);
-    }
-    .modal__close {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(0, 0, 0, 0.04);
-      color: var(--text-tertiary);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background var(--transition-fast), color var(--transition-fast);
-      flex-shrink: 0;
-    }
-    .modal__close:hover { background: rgba(0, 0, 0, 0.08); color: var(--text-primary); }
-    .modal__close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .modal__body {
-      padding: var(--space-5);
-      overflow-y: auto;
-    }
-
-    .install-section { margin-bottom: var(--space-5); }
-    .install-section:last-child { margin-bottom: 0; }
-    .install-section__title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: var(--space-2);
-    }
-    .install-section__desc {
-      font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.47;
-      margin-bottom: var(--space-1);
-    }
-    .install-section__meta {
-      font-size: 13px;
-      color: var(--text-tertiary);
-    }
-
-    /* Terminal */
-    .terminal {
-      background: #1c1c1e;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-    }
-    .terminal__bar {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      padding: var(--space-2) var(--space-3);
-      background: #2c2c2e;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .terminal__lights {
-      display: flex;
-      gap: 7px;
-    }
-    .terminal__lights span {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: #ff5f57;
-    }
-    .terminal__lights span:nth-child(2) { background: #febc2e; }
-    .terminal__lights span:nth-child(3) { background: #28c840; }
-    .terminal__title {
-      flex: 1;
-      text-align: center;
-      font-size: 12px;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.55);
-      font-family: var(--font-sans);
-    }
-    .terminal__copy {
+    .chevron-link {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
+      gap: 4px;
+      font-size: 19px;
+      color: var(--link);
+    }
+    .chevron-link span { transition: transform 180ms var(--ease); }
+    .chevron-link:hover span { transform: translateX(3px); }
+
+    .tap-strip {
+      margin: 34px auto 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 10px 8px 18px;
+      border-radius: 980px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--hairline);
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink-2);
+    }
+    .tap-strip button {
+      border: 0;
+      background: var(--bg);
+      color: var(--ink);
+      border: 1px solid var(--hairline);
+      border-radius: 980px;
+      padding: 5px 12px;
+      font: 500 12px var(--font);
+      cursor: pointer;
+      transition: background 150ms var(--ease);
+    }
+    .tap-strip button:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* ===== Apple Product Showcase Grid ===== */
+    .showcase {
+      padding-block: 12px 96px;
+    }
+    .product-stack {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .product-tile {
+      border-radius: 28px;
+      overflow: clip;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--hairline);
+      transition: transform 320ms var(--ease);
+    }
+    .product-tile:hover { transform: translateY(-3px); }
+
+    /* Flagship full-width hero tile (Widgets) */
+    .product-tile--hero {
+      grid-column: span 2;
+      background: linear-gradient(160deg, #f5f7fb 0%, #eef2f9 55%, #f5f5f7 100%);
+      color: #1d1d1f;
+      padding: 56px 56px 48px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      align-items: center;
+      gap: 44px;
+    }
+    @media (prefers-color-scheme: dark) {
+      .product-tile--hero {
+        background: linear-gradient(160deg, #16181f 0%, #1c1f29 55%, #14151a 100%);
+        color: #f5f5f7;
+      }
+    }
+
+    .product-tile--light {
+      background: var(--card-light);
+      color: var(--ink);
+      padding: 52px 42px 44px;
+      text-align: center;
+      min-block-size: 520px;
+    }
+    .product-tile--dark {
+      background: var(--card-dark);
+      color: #f5f5f7;
+      padding: 52px 42px 44px;
+      text-align: center;
+      min-block-size: 520px;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .p-badge {
+      display: inline-block;
+      font: 600 12px var(--display);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-block-end: 8px;
+    }
+    .product-tile--dark .p-badge { color: #64d2ff; }
+    .p-title {
+      font-family: var(--display);
+      font-size: clamp(32px, 3.6vw, 44px);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.028em;
+    }
+    .p-tagline {
+      margin-block-start: 8px;
+      font-family: var(--display);
+      font-size: 21px;
+      font-weight: 400;
+      line-height: 1.3;
+      letter-spacing: -0.012em;
+      opacity: 0.78;
+    }
+    .p-desc {
+      margin-block-start: 16px;
+      font-size: 15.5px;
+      line-height: 1.5;
+      opacity: 0.72;
+      max-inline-size: 460px;
+    }
+    .product-tile--light .p-desc,
+    .product-tile--dark .p-desc {
+      margin-inline: auto;
+    }
+    .p-links {
+      margin-block-start: 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .product-tile--light .p-links,
+    .product-tile--dark .p-links {
+      justify-content: center;
+    }
+    .p-meta {
+      margin-block-start: 18px;
+      font-size: 12.5px;
+      opacity: 0.56;
+      font-weight: 500;
+    }
+
+    /* Miniature Apple Studio Bento Composition for Widgets Hero */
+    .mini-desktop {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 24px 56px rgba(17, 19, 24, 0.1);
+    }
+    @media (prefers-color-scheme: dark) {
+      .mini-desktop {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 24px 56px rgba(0, 0, 0, 0.45);
+      }
+    }
+    .mw {
+      border-radius: 16px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+      font-family: var(--display);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+      min-inline-size: 0;
+    }
+    .mw--2 { grid-column: span 2; }
+    .mw--3 { grid-column: span 3; }
+    .mw--4 { grid-column: span 4; }
+    .mw--blue { background: linear-gradient(145deg, #1d82ff, #42a0ff); color: #fff; }
+    .mw--gold { background: linear-gradient(145deg, #ffd966, #ffbf34); color: #1e1807; }
+    .mw--dark { background: linear-gradient(145deg, #262930, #191b20); color: #f5f5f7; }
+    .mw--white { background: #fff; color: #1d1d1f; border: 1px solid rgba(0, 0, 0, 0.06); }
+    .mw--violet { background: linear-gradient(145deg, #744bff, #9a74ff); color: #fff; }
+    .mw__kicker { font-size: 8.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.74; }
+    .mw__big { font-size: 26px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+    .mw__line { font-size: 11px; font-weight: 600; opacity: 0.88; white-space: nowrap; overflow: clip; text-overflow: ellipsis; }
+    .mw__bar { block-size: 5px; border-radius: 999px; background: rgba(127, 127, 127, 0.22); overflow: clip; }
+    .mw__bar i { display: block; block-size: 100%; border-radius: 999px; }
+
+    /* Visual stage inside Nodio & Cleaner cards */
+    .p-stage {
+      margin-block-start: 36px;
+      display: grid;
+      place-items: center;
+      flex: 1;
+    }
+    .app-glyph {
+      inline-size: 96px;
+      block-size: 96px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+    .app-glyph--nodio { background: linear-gradient(145deg, #0a84ff, #0051d5); color: #fff; }
+    .app-glyph--cleaner { background: linear-gradient(145deg, #5ac8fa, #0071e3); color: #fff; }
+    .stage-chips {
+      margin-block-start: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+    .stage-chip {
       font-size: 12px;
       font-weight: 500;
-      color: rgba(255, 255, 255, 0.85);
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background var(--transition-fast), color var(--transition-fast);
-      font-family: var(--font-sans);
+      padding: 5px 12px;
+      border-radius: 980px;
+      background: rgba(127, 127, 127, 0.12);
     }
-    .terminal__copy:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
-    .terminal__copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .terminal__copy svg { width: 12px; height: 12px; }
-    .terminal__body {
-      padding: var(--space-4);
-      font-family: var(--font-mono);
-      font-size: 14px;
-      line-height: 1.6;
+
+    /* ===== Apple Editorial Philosophy Strip ===== */
+    .pillars {
+      border-block: 1px solid var(--hairline);
+      background: var(--bg-subtle);
+      padding-block: 76px;
+    }
+    .pillars__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 44px;
+    }
+    .pillar h3 {
+      font-family: var(--display);
+      font-size: 21px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      margin-block: 14px 8px;
+    }
+    .pillar p {
+      font-size: 15px;
+      line-height: 1.52;
+      color: var(--ink-3);
+    }
+    .pillar svg { color: var(--ink); }
+
+    /* ===== Install Section ===== */
+    .install-sec {
+      padding-block: 96px;
+      text-align: center;
+    }
+    .install-sec h2 {
+      font-family: var(--display);
+      font-size: clamp(32px, 4.5vw, 48px);
+      font-weight: 600;
+      letter-spacing: -0.028em;
+      line-height: 1.08;
+    }
+    .install-sec__sub {
+      margin: 12px auto 34px;
+      max-inline-size: 520px;
+      font-size: 19px;
+      color: var(--ink-3);
+    }
+
+    .seg-bar {
+      display: inline-flex;
+      padding: 4px;
+      border-radius: 980px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--hairline);
+      margin-block-end: 24px;
+      gap: 2px;
+    }
+    .seg-bar button {
+      border: 0;
+      background: transparent;
+      color: var(--ink-3);
+      font: 500 13.5px var(--font);
+      padding: 7px 16px;
+      border-radius: 980px;
+      cursor: pointer;
+      transition: background 180ms var(--ease), color 180ms var(--ease);
+    }
+    .seg-bar button[aria-selected="true"] {
+      background: var(--bg);
+      color: var(--ink);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .terminal {
+      max-inline-size: 680px;
+      margin-inline: auto;
+      background: var(--term-bg);
       color: #f5f5f7;
-      min-height: 88px;
-      white-space: pre;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 28px 72px rgba(0, 0, 0, 0.18);
+      text-align: start;
+      overflow: clip;
+    }
+    .term-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-block-end: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .term-bar i { inline-size: 11px; block-size: 11px; border-radius: 50%; background: #ff5f57; }
+    .term-bar i:nth-child(2) { background: #febc2e; }
+    .term-bar i:nth-child(3) { background: #28c840; }
+    .term-bar span { margin-inline-start: auto; font-size: 12px; color: #86868b; }
+    .term-copy {
+      background: rgba(255, 255, 255, 0.12);
+      color: #f5f5f7;
+      border: 0;
+      border-radius: 980px;
+      padding: 5px 13px;
+      font: 500 12px var(--font);
+      cursor: pointer;
+    }
+    .term-copy:hover { background: rgba(255, 255, 255, 0.22); }
+    .terminal pre {
+      padding: 22px 24px 26px;
+      font: 14.5px/1.8 var(--mono);
       overflow-x: auto;
     }
-    .terminal__line { display: block; white-space: pre; }
-    .term-prompt { color: #28c840; user-select: none; margin-right: 8px; }
-    .term-comment { color: #6a6e73; }
-    .term-command { color: #f5f5f7; }
-    .term-arg { color: #7dcfff; }
-
-    .install-note {
-      font-size: 14px;
-      color: var(--text-tertiary);
-      margin-top: var(--space-4);
-      padding: var(--space-3) var(--space-4);
-      background: var(--accent-soft);
-      border-radius: var(--radius-md);
-      border-left: 3px solid var(--accent);
-      line-height: 1.45;
+    .t-c { color: #86868b; }
+    .t-p { color: #2997ff; user-select: none; }
+    .t-k { color: #64d2ff; }
+    .install-footnote {
+      margin: 20px auto 0;
+      max-inline-size: 620px;
+      font-size: 13px;
+      color: var(--ink-3);
     }
-    .install-note strong { color: var(--text-primary); font-weight: 600; }
 
     /* ===== Footer ===== */
     .footer {
-      padding: var(--space-6) var(--space-5);
-      text-align: center;
-      border-top: 1px solid var(--border-soft);
-      background: var(--surface);
+      border-block-start: 1px solid var(--hairline);
+      background: var(--bg-subtle);
+      padding-block: 28px 40px;
+      font-size: 12px;
+      color: var(--ink-3);
     }
-    .footer p {
-      font-size: 13px;
-      color: var(--text-tertiary);
-      line-height: 1.5;
+    .footer__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
     }
-    .footer a { font-weight: 500; color: var(--text-secondary); }
-    .footer a:hover { color: var(--accent); }
+    .footer__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer a { color: var(--ink-2); }
 
-    /* ===== Toast ===== */
+    /* ===== Modal ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.42);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay[aria-hidden="false"] { display: flex; }
+    .modal {
+      background: var(--modal-bg);
+      color: var(--ink);
+      border-radius: 26px;
+      border: 1px solid var(--hairline);
+      box-shadow: 0 32px 84px rgba(0, 0, 0, 0.28);
+      max-inline-size: 560px;
+      inline-size: 100%;
+      overflow: clip;
+    }
+    .modal__head {
+      padding: 20px 24px;
+      border-block-end: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal__head h3 {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+    }
+    .modal__close {
+      inline-size: 30px;
+      block-size: 30px;
+      border-radius: 50%;
+      border: 0;
+      background: rgba(127, 127, 127, 0.14);
+      color: var(--ink);
+      font-size: 16px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    .modal__body { padding: 24px; display: grid; gap: 18px; }
+    .modal__note { font-size: 13.5px; color: var(--ink-3); line-height: 1.5; }
+    .modal__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
     .toast {
       position: fixed;
-      bottom: var(--space-5);
-      right: var(--space-5);
-      background: var(--text-primary);
-      color: #fff;
-      padding: var(--space-3) var(--space-4);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-md);
-      font-size: 14px;
+      inset-inline-start: 50%;
+      inset-block-end: 28px;
+      transform: translate(-50%, 16px);
+      background: var(--ink);
+      color: var(--bg);
+      padding: 10px 18px;
+      border-radius: 980px;
+      font-size: 13px;
       font-weight: 500;
-      line-height: 1.3;
-      transform: translateY(24px);
       opacity: 0;
-      transition: transform var(--transition-normal), opacity var(--transition-normal);
-      z-index: 1100;
       pointer-events: none;
+      transition: opacity 200ms var(--ease), transform 200ms var(--ease);
+      z-index: 300;
     }
-    .toast[aria-hidden="false"] {
-      transform: translateY(0);
-      opacity: 1;
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 920px) {
+      .product-tile--hero {
+        grid-template-columns: 1fr;
+        padding: 42px 28px 36px;
+        text-align: center;
+      }
+      .product-tile--hero .p-desc { margin-inline: auto; }
+      .product-tile--hero .p-links { justify-content: center; }
+      .product-stack { grid-template-columns: 1fr; }
+      .product-tile--hero { grid-column: span 1; }
+      .pillars__grid { grid-template-columns: 1fr; gap: 28px; }
     }
-
-    /* ===== Scrollbar ===== */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #c7c7cc; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #a1a1a6; }
-
     @media (max-width: 600px) {
-      .hero { padding: var(--space-7) var(--space-4) var(--space-6); }
-      .hero h1 { font-size: 40px; }
-      .apps { padding: 0 var(--space-4) var(--space-7); }
+      .gnav__links li:nth-child(n+4) { display: none; }
+      .hero { padding-block: 72px 48px; }
+      .mini-desktop { grid-template-columns: repeat(2, 1fr); }
+      .mw--2, .mw--3, .mw--4 { grid-column: span 2; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      html { scroll-behavior: auto; }
     }
   </style>
 </head>
 <body>
-  <nav class="site-nav" aria-label="Primary">
-    <div class="site-nav__inner">
-      <a class="site-nav__brand" href="#top">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+  <header class="gnav">
+    <div class="wrap gnav__inner">
+      <a class="gnav__brand" href="#top">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="18" height="7" rx="1.6"/></svg>
         Ash Tap
       </a>
-      <a class="site-nav__link" href="https://github.com/its-ash/tap" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <nav aria-label="Primary">
+        <ul class="gnav__links">
+          <li><a href="./widgets/">Widgets</a></li>
+          <li><a href="./nodio/">Nodio</a></li>
+          <li><a href="./cleaner/">Cleaner</a></li>
+          <li><a href="#install">Install</a></li>
+          <li><a href="https://github.com/its-ash/homebrew-tap" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        </ul>
+      </nav>
     </div>
-  </nav>
+  </header>
 
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
-      <span class="hero__eyebrow">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1v14M1 8h14"/></svg>
-        Homebrew Tap for macOS
-      </span>
-      <h1 id="hero-title">Native Mac apps.<br>One command away.</h1>
-      <p>Install Nodio, Kode, Widgets, and Cleaner with Homebrew. Voice-to-text dictation, a coding agent, an all-in-one desktop widget studio (with AI sticky notes &amp; local AI router), and a build cache cleaner, built for privacy, performance, and speed.</p>
-      <div class="hero__actions">
-        <a href="#apps" class="btn btn-primary">Browse apps</a>
-        <a href="https://github.com/its-ash/tap" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+      <div class="wrap">
+        <p class="hero__eyebrow">Homebrew Tap for macOS</p>
+        <h1 id="hero-title">Thoughtful Mac apps.<br>Built to feel native.</h1>
+        <p class="hero__sub">Three focused utilities crafted in Swift and Rust for Apple Silicon. Install and update any of them with a single command.</p>
+        <div class="hero__actions">
+          <a href="#apps" class="pill-btn pill-btn--primary">Explore apps</a>
+          <a href="#install" class="chevron-link">Quick install <span aria-hidden="true">›</span></a>
+        </div>
+        <div class="tap-strip" aria-label="Homebrew tap command">
+          <span>brew tap its-ash/tap</span>
+          <button type="button" id="copy-tap">Copy</button>
+        </div>
       </div>
     </section>
 
-    <section class="apps" id="apps" aria-labelledby="apps-title">
-      <div class="apps__heading">
-        <h2 id="apps-title">Available Applications</h2>
-        <p>Four native Mac utilities. Install any of them in seconds.</p>
+    <section class="showcase" id="apps" aria-label="Featured Applications">
+      <div class="wrap--wide">
+        <div class="product-stack">
+          <!-- Flagship: Widgets -->
+          <article class="product-tile product-tile--hero">
+            <div>
+              <span class="p-badge">Flagship · v2.0</span>
+              <h2 class="p-title">Widgets</h2>
+              <p class="p-tagline">Your Mac desktop, beautifully alive.</p>
+              <p class="p-desc">28 compact Rainbow Bento widgets across 6 finishes: clocks, weather, calendar, AI 5-hour limits, resizable sticky notes with AI refine, built-in local AI router, dev ports, tasks, music, launcher, and a 9-slot paste board — with Google &amp; Firebase sync.</p>
+              <div class="p-links">
+                <a href="./widgets/" class="pill-btn pill-btn--primary pill-btn--sm">Learn more</a>
+                <button type="button" class="pill-btn pill-btn--outline pill-btn--sm" data-install="widgets">Install</button>
+              </div>
+              <p class="p-meta">macOS 15.0 Sequoia or later · Swift 6 &amp; AppKit</p>
+            </div>
+
+            <div class="mini-desktop" aria-hidden="true">
+              <div class="mw mw--2 mw--blue">
+                <span class="mw__kicker">Digital</span>
+                <span class="mw__big" id="mini-clock">22:40</span>
+                <span class="mw__line">22° Clear</span>
+              </div>
+              <div class="mw mw--4 mw--white">
+                <span class="mw__kicker">AI 5h Limits</span>
+                <div style="display:grid;gap:5px">
+                  <div class="mw__bar"><i style="inline-size:78%;background:#e2724b"></i></div>
+                  <div class="mw__bar"><i style="inline-size:92%;background:linear-gradient(90deg,#1d82ff,#7950ff)"></i></div>
+                  <div class="mw__bar"><i style="inline-size:66%;background:#18b95c"></i></div>
+                </div>
+                <span class="mw__line" style="opacity:0.6">Claude · Gemini · Codex</span>
+              </div>
+              <div class="mw mw--3 mw--gold">
+                <span class="mw__kicker">Quick Note · ✨ AI</span>
+                <span class="mw__line">☑ Ship Widgets 2.0</span>
+                <span class="mw__line">☐ Review Firebase sync</span>
+              </div>
+              <div class="mw mw--3 mw--dark">
+                <span class="mw__kicker">Now Playing</span>
+                <span class="mw__line">Midnight City</span>
+                <span class="mw__line" style="opacity:0.6">M83 · Spotify</span>
+              </div>
+              <div class="mw mw--3 mw--violet">
+                <span class="mw__kicker">AI Router</span>
+                <span class="mw__line" style="font-family:var(--mono);font-size:10px">127.0.0.1:9694/v1</span>
+                <span class="mw__line" style="opacity:0.8">Mount-gated proxy</span>
+              </div>
+              <div class="mw mw--3 mw--white">
+                <span class="mw__kicker">Paste Board · ⌘V</span>
+                <span class="mw__line">9 text &amp; image slots</span>
+                <span class="mw__line" style="opacity:0.55">Click to copy</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Nodio -->
+          <article class="product-tile product-tile--light">
+            <div>
+              <span class="p-badge">Voice Dictation</span>
+              <h2 class="p-title">Nodio</h2>
+              <p class="p-tagline">Talk. It types.</p>
+              <p class="p-desc">Hold Fn, speak in English or Hinglish, and your words land in any app. On-device Whisper with Metal — zero cloud, zero subscriptions.</p>
+              <div class="p-links">
+                <a href="./nodio/" class="pill-btn pill-btn--primary pill-btn--sm">Learn more</a>
+                <button type="button" class="pill-btn pill-btn--outline pill-btn--sm" data-install="nodio">Install</button>
+              </div>
+              <p class="p-meta">macOS 13.3 Ventura or later · On-device Whisper</p>
+            </div>
+            <div class="p-stage">
+              <div class="app-glyph app-glyph--nodio" aria-hidden="true">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                  <line x1="12" y1="19" x2="12" y2="22"/>
+                </svg>
+              </div>
+              <div class="stage-chips">
+                <span class="stage-chip">100% Offline</span>
+                <span class="stage-chip">Indian English &amp; Hinglish</span>
+                <span class="stage-chip">Per-app Styles</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Cleaner -->
+          <article class="product-tile product-tile--dark">
+            <div>
+              <span class="p-badge">Developer Utility</span>
+              <h2 class="p-title">Cleaner</h2>
+              <p class="p-tagline">Gigabytes back. In one click.</p>
+              <p class="p-desc">Scans your projects for node_modules, Rust target, Flutter, Gradle, Pods, DerivedData, and global caches with a parallel Rust engine.</p>
+              <div class="p-links">
+                <a href="./cleaner/" class="pill-btn pill-btn--primary pill-btn--sm">Learn more</a>
+                <button type="button" class="pill-btn pill-btn--outline pill-btn--sm" data-install="cleaner">Install</button>
+              </div>
+              <p class="p-meta">macOS 14.0 Sonoma or later · Rust + SwiftUI</p>
+            </div>
+            <div class="p-stage">
+              <div class="app-glyph app-glyph--cleaner" aria-hidden="true">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 6h18"/>
+                  <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                  <line x1="10" y1="11" x2="10" y2="17"/>
+                  <line x1="14" y1="11" x2="14" y2="17"/>
+                </svg>
+              </div>
+              <div class="stage-chips">
+                <span class="stage-chip">30+ Build Caches</span>
+                <span class="stage-chip">Safe Move to Trash</span>
+                <span class="stage-chip">CLI Included</span>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
-      <div class="apps-grid">
-        <article class="app-card" data-app="nodio">
-          <header class="app-card__header">
-            <div class="app-card__icon app-card__icon--nodio" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                <line x1="12" y1="19" x2="12" y2="22"/>
-              </svg>
-            </div>
-            <h3 class="app-card__name">Nodio</h3>
-            <p class="app-card__tagline">Voice to text, on your Mac</p>
-          </header>
-          <div class="app-card__body">
-            <p class="app-card__description">Hold a key, speak, release, and your words land in any text field. On-device Whisper, zero cloud, no subscriptions.</p>
-            <ul class="app-card__features">
-              <li>On-device Whisper (Indian English + Hinglish)</li>
-              <li>Voice commands: punctuation, delete, snippets</li>
-              <li>Per-app styles: casual, formal, code-safe</li>
-              <li>Floating HUD with live waveform</li>
-              <li>History, stats & custom vocabulary</li>
-              <li>Requires macOS 13.3+ (Ventura)</li>
-            </ul>
-            <div class="app-card__actions">
-              <a href="https://github.com/its-ash/Nodio" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
-                View on GitHub
-              </a>
-              <button type="button" class="btn btn-primary app-card__btn" data-install="nodio" aria-label="Show Nodio installation instructions">
-                Install
-              </button>
-            </div>
-          </div>
-        </article>
+    </section>
 
-        <article class="app-card" data-app="kode">
-          <header class="app-card__header">
-            <div class="app-card__icon app-card__icon--kode" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="16 18 22 12 16 6"/>
-                <polyline points="8 6 2 12 8 18"/>
-              </svg>
-            </div>
-            <h3 class="app-card__name">Kode</h3>
-            <p class="app-card__tagline">Native macOS coding agent</p>
-          </header>
-          <div class="app-card__body">
-            <p class="app-card__description">A coding agent that reads, edits, and runs code in one project folder. Works with the built-in AI Router inside Widgets or any OpenAI-compatible endpoint.</p>
-            <ul class="app-card__features">
-              <li>Plan, Ask, and Auto modes</li>
-              <li>File, search, edit, and shell tools in a sandboxed workspace</li>
-              <li>Skill library with /slash invocation</li>
-              <li>File tree, preview, and chat history per project</li>
-              <li>Works with Widgets AI Router on port 9694</li>
-              <li>Requires macOS 15.0+ (Sequoia)</li>
-            </ul>
-            <div class="app-card__actions">
-              <a href="https://github.com/its-ash/kode" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
-                View on GitHub
-              </a>
-              <button type="button" class="btn btn-primary app-card__btn" data-install="kode" aria-label="Show Kode installation instructions">
-                Install
-              </button>
-            </div>
+    <section class="pillars" aria-label="Design Principles">
+      <div class="wrap">
+        <div class="pillars__grid">
+          <div class="pillar">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <h3>Unapologetically native.</h3>
+            <p>Written directly in Swift 6, SwiftUI, AppKit, and Rust — no Electron shells, instant launch, and minimal idle CPU.</p>
           </div>
-        </article>
+          <div class="pillar">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <h3>Private by design.</h3>
+            <p>Your voice, files, and paste board stay on your Mac. Optional cloud sync in Widgets uses your own Google sign-in.</p>
+          </div>
+          <div class="pillar">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            <h3>One-command installs.</h3>
+            <p>Add the tap once. Homebrew handles installation, quarantine removal, and upgrades across every app.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <article class="app-card" data-app="widgets">
-          <header class="app-card__header">
-            <div class="app-card__icon app-card__icon--widgets" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-                <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-                <rect x="3" y="14" width="18" height="7" rx="1.5"/>
-              </svg>
-            </div>
-            <h3 class="app-card__name">Widgets</h3>
-            <p class="app-card__tagline">Bento desktop widgets, AI notes &amp; local router</p>
-          </header>
-          <div class="app-card__body">
-            <p class="app-card__description">28 compact Rainbow Bento widgets for your Mac desktop: clocks, weather, calendar, AI usage limits, resizable sticky notes with AI refine, local AI router, dev ports, tasks, music, launcher, and paste board.</p>
-            <ul class="app-card__features">
-              <li>6 card themes (White, Blue, Violet, Pink, Gold, Dark)</li>
-              <li>Resizable Sticky Notes, Notepad &amp; All Notes with AI refine</li>
-              <li>Built-in OpenAI-compatible AI Router Server &amp; inline Chat</li>
-              <li>Clock, weather, calendar, AI 5h limits, PM2 &amp; Local Ports</li>
-              <li>Quick Tasks, Now Playing, Quick Launcher &amp; 9-slot Paste Board</li>
-              <li>Google Sign-In with Firebase sync · macOS 15.0+ (Sequoia)</li>
-            </ul>
-            <div class="app-card__actions">
-              <a href="https://widgets.itsash.in" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
-                Website
-              </a>
-              <button type="button" class="btn btn-primary app-card__btn" data-install="widgets" aria-label="Show Widgets installation instructions">
-                Install
-              </button>
-            </div>
-          </div>
-        </article>
+    <section class="install-sec" id="install" aria-labelledby="install-title">
+      <div class="wrap">
+        <h2 id="install-title">One command away.</h2>
+        <p class="install-sec__sub">Pick an app and paste into Terminal. Homebrew clears Gatekeeper automatically.</p>
 
-        <article class="app-card" data-app="cleaner">
-          <header class="app-card__header">
-            <div class="app-card__icon app-card__icon--cleaner" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 6h18"/>
-                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-                <line x1="10" y1="11" x2="10" y2="17"/>
-                <line x1="14" y1="11" x2="14" y2="17"/>
-              </svg>
-            </div>
-            <h3 class="app-card__name">Cleaner</h3>
-            <p class="app-card__tagline">Reclaim space from build folders</p>
-          </header>
-          <div class="app-card__body">
-            <p class="app-card__description">Finds and removes node_modules, Rust target, Flutter, Gradle, Pods, DerivedData, and tool caches across all your projects. Native app plus a fast Rust engine.</p>
-            <ul class="app-card__features">
-              <li>Scans projects for 30+ build and cache types</li>
-              <li>Global caches: Xcode, Gradle, npm, Cargo, pip, and more</li>
-              <li>Smart pre-selection skips recently used projects</li>
-              <li>Move to Trash or delete permanently</li>
-              <li>History, rules browser, and menu bar extra</li>
-              <li>Requires macOS 14.0+ (Sonoma)</li>
-            </ul>
-            <div class="app-card__actions">
-              <a href="https://github.com/its-ash/cleaner" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
-                View on GitHub
-              </a>
-              <button type="button" class="btn btn-primary app-card__btn" data-install="cleaner" aria-label="Show Cleaner installation instructions">
-                Install
-              </button>
-            </div>
+        <div class="seg-bar" role="tablist" aria-label="Select app to install">
+          <button type="button" role="tab" aria-selected="true" data-tab="widgets">Widgets</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="nodio">Nodio</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="cleaner">Cleaner</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="all">All three</button>
+        </div>
+
+        <div class="terminal">
+          <div class="term-bar">
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <span>Terminal</span>
+            <button type="button" class="term-copy" id="copy-term">Copy</button>
           </div>
-        </article>
+          <pre id="term-code"></pre>
+        </div>
+        <p class="install-footnote">Every release zip also includes <code>INSTALL.txt</code> if you prefer dragging apps manually into Applications.</p>
       </div>
     </section>
   </main>
 
-  <footer class="footer" role="contentinfo">
-    <p>Built by <a href="https://itsash.in" target="_blank" rel="noopener noreferrer">Ashvini Jangid</a> &middot; <a href="https://github.com/its-ash/tap" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="https://itsash.in" target="_blank" rel="noopener noreferrer">itsash.in</a></p>
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <p>Built by <a href="https://itsash.in" target="_blank" rel="noopener noreferrer">Ashvini Jangid</a>.</p>
+      <div class="footer__links">
+        <a href="./widgets/">Widgets</a>
+        <a href="./nodio/">Nodio</a>
+        <a href="./cleaner/">Cleaner</a>
+        <a href="https://github.com/its-ash/homebrew-tap" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://itsash.in" target="_blank" rel="noopener noreferrer">itsash.in</a>
+      </div>
+    </div>
   </footer>
 
   <!-- Install Modal -->
   <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
     <div class="modal">
-      <header class="modal__header">
-        <h3 class="modal__title" id="modal-title">Install <span id="modal-app-name"></span></h3>
-        <button type="button" class="modal__close" id="modal-close" aria-label="Close installation instructions">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
-            <line x1="12" y1="4" x2="4" y2="12"/>
-            <line x1="4" y1="4" x2="12" y2="12"/>
-          </svg>
-        </button>
+      <header class="modal__head">
+        <h3 id="modal-title">Install</h3>
+        <button type="button" class="modal__close" id="modal-close" aria-label="Close">×</button>
       </header>
-      <div class="modal__body" id="modal-body"></div>
+      <div class="modal__body">
+        <div class="terminal">
+          <div class="term-bar">
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <span>Terminal</span>
+            <button type="button" class="term-copy" id="modal-copy">Copy</button>
+          </div>
+          <pre id="modal-code"></pre>
+        </div>
+        <p class="modal__note" id="modal-note"></p>
+        <div class="modal__actions">
+          <a id="modal-page" href="./" class="pill-btn pill-btn--primary pill-btn--sm">Open App Page</a>
+          <a id="modal-download" href="#" class="pill-btn pill-btn--outline pill-btn--sm" target="_blank" rel="noopener noreferrer">Direct Download</a>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Toast -->
-  <div class="toast" id="toast" role="status" aria-live="polite" aria-hidden="true"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    // ===== App Data =====
-    const apps = {
-      nodio: {
-        name: "Nodio",
-        cask: "nodio",
-        repo: "its-ash/Nodio",
-        desc: "Voice to text, on your Mac",
-        requirements: "Requires macOS 13.3+ (Ventura)",
-        commands: [
-          { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
-          { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
-          { comment: "Install Nodio", command: "brew install --cask nodio" },
-        ],
-        notes: "On first launch, grant Microphone and Accessibility permissions in System Settings \u2192 Privacy & Security."
-      },
-      kode: {
-        name: "Kode",
-        cask: "kode",
-        repo: "its-ash/kode",
-        desc: "Native macOS coding agent",
-        requirements: "Requires macOS 15.0+ (Sequoia)",
-        commands: [
-          { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
-          { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
-          { comment: "Install Kode", command: "brew install --cask kode" },
-        ],
-        notes: "Mount the AI Router widget in Widgets (port 9694) or configure any OpenAI-compatible endpoint in Kode."
-      },
+    const APPS = {
       widgets: {
         name: "Widgets",
-        cask: "widgets",
-        repo: "its-ash/widgets",
-        desc: "Bento desktop widgets, AI sticky notes, local AI router & tools",
-        requirements: "Requires macOS 15.0+ (Sequoia)",
-        commands: [
-          { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
-          { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
-          { comment: "Install Widgets", command: "brew install --cask widgets" },
+        page: "./widgets/",
+        download: "https://github.com/its-ash/homebrew-tap/releases/download/widgets-v2.0.0/Widgets-2.0.0-macos.zip",
+        cmds: [
+          { c: "Add and trust the tap (once)", v: "brew tap its-ash/tap" },
+          { c: "", v: "brew trust its-ash/tap" },
+          { c: "Install Widgets", v: "brew install --cask widgets" },
         ],
-        notes: "Open Widgets from Applications, complete the quick permissions setup, and add tiles from the gallery. Sign in with Google to sync across Macs via Firebase."
+        note: "Open Widgets from Applications, finish the quick permissions setup, and drag tiles onto your desktop. Sign in with Google to sync via Firebase."
+      },
+      nodio: {
+        name: "Nodio",
+        page: "./nodio/",
+        download: "https://github.com/its-ash/Nodio/releases/latest",
+        cmds: [
+          { c: "Add and trust the tap (once)", v: "brew tap its-ash/tap" },
+          { c: "", v: "brew trust its-ash/tap" },
+          { c: "Install Nodio", v: "brew install --cask nodio" },
+        ],
+        note: "On first launch, grant Microphone and Accessibility permissions in System Settings to start dictating with Fn."
       },
       cleaner: {
         name: "Cleaner",
-        cask: "cleaner",
-        repo: "its-ash/cleaner",
-        desc: "Find and delete build artifacts, dependency folders and caches",
-        requirements: "Requires macOS 14.0+ (Sonoma)",
-        commands: [
-          { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
-          { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
-          { comment: "Install Cleaner", command: "brew install --cask cleaner" },
+        page: "./cleaner/",
+        download: "https://github.com/its-ash/cleaner/releases/latest",
+        cmds: [
+          { c: "Add and trust the tap (once)", v: "brew tap its-ash/tap" },
+          { c: "", v: "brew trust its-ash/tap" },
+          { c: "Install Cleaner", v: "brew install --cask cleaner" },
         ],
-        notes: "Open Cleaner from Applications, add your project folders in Settings, then press \u2318R to scan."
+        note: "Open Cleaner from Applications, add your project folders in Settings, then press ⌘R to scan."
+      },
+      all: {
+        name: "All three apps",
+        page: "#apps",
+        download: "https://github.com/its-ash/homebrew-tap/releases",
+        cmds: [
+          { c: "Add and trust the tap (once)", v: "brew tap its-ash/tap" },
+          { c: "", v: "brew trust its-ash/tap" },
+          { c: "Install Widgets, Nodio, and Cleaner", v: "brew install --cask widgets nodio cleaner" },
+        ],
+        note: "All three casks automatically remove macOS Gatekeeper quarantine attributes on install."
       }
     };
 
-    // ===== DOM Elements =====
-    const modalOverlay = document.getElementById('modal-overlay');
-    const modalTitle = document.getElementById('modal-app-name');
-    const modalBody = document.getElementById('modal-body');
-    const modalClose = document.getElementById('modal-close');
-    const toast = document.getElementById('toast');
-    const installButtons = document.querySelectorAll('[data-install]');
-
-    // ===== Modal Functions =====
-    function renderTerminal(app) {
-      const allCommands = app.commands.map(c => c.command).join('\n');
-      const lines = app.commands.map(cmd =>
-        `<span class="terminal__line"><span class="term-comment"># ${escapeHtml(cmd.comment)}</span></span>` +
-        `<span class="terminal__line"><span class="term-prompt">$</span><span class="term-command">${highlightCommand(cmd.command)}</span></span>`
-      ).join('');
-
-      return `
-        <div class="install-section">
-          <h4 class="install-section__title">${escapeHtml(app.name)}</h4>
-          <p class="install-section__desc">${escapeHtml(app.desc)}</p>
-          <p class="install-section__meta">${escapeHtml(app.requirements)}</p>
-        </div>
-        <div class="install-section">
-          <h4 class="install-section__title">Installation</h4>
-          <div class="terminal" data-copy-text="${escapeAttr(allCommands)}">
-            <div class="terminal__bar">
-              <div class="terminal__lights" aria-hidden="true"><span></span><span></span><span></span></div>
-              <span class="terminal__title">Terminal</span>
-              <button type="button" class="terminal__copy" data-action="copy" aria-label="Copy all commands to clipboard">
-                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="8" height="8" rx="1.5"/><path d="M2 9V3.5A1.5 1.5 0 0 1 3.5 2H9"/></svg>
-                <span class="terminal__copy-label">Copy</span>
-              </button>
-            </div>
-            <div class="terminal__body" tabindex="0" role="region" aria-label="Installation commands">${lines}</div>
-          </div>
-          <p class="install-section__meta" style="margin-top: var(--space-2);">Paste these into Terminal, or click any line to copy it.</p>
-        </div>
-        <div class="install-note">
-          <strong>Note:</strong> ${escapeHtml(app.notes)}
-        </div>
-        <div class="install-section" style="margin-top: var(--space-4);">
-          <a href="https://github.com/${escapeAttr(app.repo)}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" style="width: 100%; justify-content: center;">
-            View on GitHub
-          </a>
-        </div>
-      `;
-    }
-
-    function highlightCommand(cmd) {
-      // color 'brew' keyword + cask name
-      const escaped = escapeHtml(cmd);
-      return escaped.replace(/^brew\b/, '<span class="term-arg">brew</span>')
-                  .replace(/(--cask)\s+(\S+)/, '$1 <span class="term-command" style="color:#ffd60a;">$2</span>');
-    }
-
-    function openModal(appKey) {
-      const app = apps[appKey];
-      if (!app) return;
-      modalTitle.textContent = app.name;
-      modalBody.innerHTML = renderTerminal(app);
-
-      modalOverlay.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-
-      const focusable = modalOverlay.querySelector('button, a, [href]');
-      if (focusable) focusable.focus();
-      modalOverlay.addEventListener('keydown', trapFocus);
-    }
-
-    function closeModal() {
-      modalOverlay.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      modalOverlay.removeEventListener('keydown', trapFocus);
-    }
-
-    function trapFocus(e) {
-      if (e.key !== 'Tab') return;
-      const focusable = modalOverlay.querySelectorAll('button, a, [href], [tabindex]:not([tabindex="-1"])');
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (!focusable.length) return;
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-
-    // ===== Toast =====
+    const toast = document.getElementById("toast");
     let toastTimer;
-    function showToast(message) {
-      toast.textContent = message;
-      toast.setAttribute('aria-hidden', 'false');
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add("show");
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.setAttribute('aria-hidden', 'true'), 2800);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+    }
+    async function copyText(str) {
+      try { await navigator.clipboard.writeText(str); showToast("Copied to clipboard"); }
+      catch { showToast("Copy failed — select manually"); }
     }
 
-    // ===== Copy to Clipboard =====
-    async function copyToClipboard(text) {
-      try {
-        await navigator.clipboard.writeText(text);
-        showToast('Copied to clipboard');
-        return true;
-      } catch {
-        // Fallback
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand('copy'); showToast('Copied to clipboard'); return true; }
-        catch { showToast('Copy failed'); return false; }
-        finally { document.body.removeChild(ta); }
-      }
+    function renderCommands(list) {
+      return list.map(item => {
+        const comment = item.c ? `<span class="t-c"># ${item.c}</span>\n` : "";
+        const cmd = item.v.replace(/^brew\b/, '<span class="t-k">brew</span>');
+        return `${comment}<span class="t-p">$ </span>${cmd}`;
+      }).join("\n");
+    }
+    function plainCommands(list) {
+      return list.map(i => i.v).join("\n");
     }
 
-    // ===== Escape helpers =====
-    function escapeHtml(str) {
-      return String(str)
-        .replace(/&/g, '&')
-        .replace(/</g, '<')
-        .replace(/>/g, '>')
-        .replace(/"/g, '"')
-        .replace(/'/g, '&#039;');
+    // Main terminal tabs
+    let activeTab = "widgets";
+    const termCode = document.getElementById("term-code");
+    function setTab(key) {
+      activeTab = key;
+      document.querySelectorAll("[data-tab]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === key)));
+      termCode.innerHTML = renderCommands(APPS[key].cmds);
     }
-    function escapeAttr(str) {
-      return escapeHtml(str).replace(/\n/g, '&#10;');
+    setTab("widgets");
+    document.querySelectorAll("[data-tab]").forEach(btn => btn.addEventListener("click", () => setTab(btn.dataset.tab)));
+    document.getElementById("copy-term").addEventListener("click", () => copyText(plainCommands(APPS[activeTab].cmds)));
+    document.getElementById("copy-tap").addEventListener("click", () => copyText("brew tap its-ash/tap"));
+
+    // Live mini clock in Widgets flagship preview
+    const miniClock = document.getElementById("mini-clock");
+    function updateClock() {
+      const d = new Date();
+      miniClock.textContent = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
     }
+    updateClock();
+    setInterval(updateClock, 15000);
 
-    // ===== Event Delegation =====
-    installButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const appKey = btn.getAttribute('data-install');
-        openModal(appKey);
-      });
-    });
+    // Install Modal
+    const overlay = document.getElementById("modal-overlay");
+    const modalTitle = document.getElementById("modal-title");
+    const modalCode = document.getElementById("modal-code");
+    const modalNote = document.getElementById("modal-note");
+    const modalPage = document.getElementById("modal-page");
+    const modalDownload = document.getElementById("modal-download");
+    let modalKey = "widgets";
 
-    modalClose.addEventListener('click', closeModal);
-    modalOverlay.addEventListener('click', (e) => {
-      if (e.target === modalOverlay) closeModal();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modalOverlay.getAttribute('aria-hidden') === 'false') {
-        closeModal();
-      }
-    });
-
-    // Copy handling: button + click any terminal line
-    modalBody.addEventListener('click', (e) => {
-      const copyBtn = e.target.closest('[data-action="copy"]');
-      if (copyBtn) {
-        const term = copyBtn.closest('.terminal');
-        const text = term.getAttribute('data-copy-text').replace(/&#10;/g, '\n');
-        // decode entities
-        const decoded = text.replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>').replace(/"/g,'"').replace(/&#039;/g,"'").replace(/&#10;/g,'\n');
-        copyToClipboard(decoded);
-        const label = copyBtn.querySelector('.terminal__copy-label');
-        if (label) {
-          const original = label.textContent;
-          label.textContent = 'Copied';
-          copyBtn.style.background = 'rgba(40, 200, 64, 0.18)';
-          setTimeout(() => {
-            label.textContent = original;
-            copyBtn.style.background = '';
-          }, 1600);
-        }
-        return;
-      }
-
-      const line = e.target.closest('.terminal__line');
-      if (line && line.querySelector('.term-command')) {
-        const cmd = line.querySelector('.term-command').textContent;
-        // reconstruct full command: find preceding? just this line's command (without prompt)
-        const code = line.querySelector('.term-command').textContent +
-          (line.nextElementSibling && line.nextElementSibling.classList.contains('terminal__line') && line.nextElementSibling.querySelector('.term-arg') ? '' : '');
-        // Actually copy the plain command text already in the command span's textContent includes rest? We split spans; textContent captures all.
-        copyToClipboard(line.textContent.replace(/^\$\s*/, '').trim());
-      }
-    });
-
-    // ===== Respect Reduced Motion =====
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (prefersReducedMotion.matches) {
-      document.documentElement.style.setProperty('--transition-fast', '0ms');
-      document.documentElement.style.setProperty('--transition-normal', '0ms');
-      document.documentElement.style.setProperty('--transition-slow', '0ms');
+    function openModal(key) {
+      const app = APPS[key];
+      if (!app) return;
+      modalKey = key;
+      modalTitle.textContent = `Install ${app.name}`;
+      modalCode.innerHTML = renderCommands(app.cmds);
+      modalNote.textContent = app.note;
+      modalPage.href = app.page;
+      modalDownload.href = app.download;
+      overlay.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      document.getElementById("modal-close").focus();
     }
+    function closeModal() {
+      overlay.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+    document.querySelectorAll("[data-install]").forEach(b => b.addEventListener("click", () => openModal(b.dataset.install)));
+    document.getElementById("modal-close").addEventListener("click", closeModal);
+    document.getElementById("modal-copy").addEventListener("click", () => copyText(plainCommands(APPS[modalKey].cmds)));
+    overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && overlay.getAttribute("aria-hidden") === "false") closeModal(); });
+
+    // Dynamically update latest Widgets download link from tap releases
+    fetch("https://api.github.com/repos/its-ash/homebrew-tap/releases")
+      .then(r => r.ok ? r.json() : [])
+      .then(list => {
+        const rel = Array.isArray(list) ? list.find(x => x.tag_name && x.tag_name.startsWith("widgets-v")) : null;
+        const asset = rel && (rel.assets || []).find(a => a.name && a.name.endsWith(".zip"));
+        if (asset && asset.browser_download_url) APPS.widgets.download = asset.browser_download_url;
+      })
+      .catch(() => {});
   </script>
 </body>
 </html>

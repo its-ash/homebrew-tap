@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cleaner for Mac: Find and delete build output, dependencies, and caches.</title>
+  <meta name="description" content="Cleaner scans your projects for node_modules, Rust target, Flutter and Gradle builds, Pods, DerivedData, and dozens of tool caches. Review what it found, then move it to the Trash.">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:title" content="Cleaner for Mac">
+  <meta property="og:description" content="Find and delete build output, dependencies, and caches.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tap.itsash.in/cleaner/">
+  <link rel="canonical" href="https://tap.itsash.in/cleaner/">
+  <link rel="icon" href="icon-web.svg" type="image/svg+xml">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Cleaner","operatingSystem":"macOS","applicationCategory":"UtilitiesApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://tap.itsash.in/cleaner/","downloadUrl":"https://github.com/its-ash/cleaner/releases/latest"}
+  </script>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --surface: #ffffff;
+      --text: #1d1d1f;
+      --text-2: #424245;
+      --text-3: #6e6e73;
+      --link: #0066cc;
+      --btn: #0071e3;
+      --btn-hover: #0077ed;
+      --border: rgba(0, 0, 0, 0.08);
+      --nav: rgba(251, 251, 253, 0.72);
+      --term: #1d1d1f;
+      --accent: #0a84ff;
+      --accent-2: #64d2ff;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --mono: "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --surface: #1c1c1e;
+        --text: #f5f5f7;
+        --text-2: #d2d2d7;
+        --text-3: #a1a1a6;
+        --link: #2997ff;
+        --border: rgba(255, 255, 255, 0.1);
+        --nav: rgba(22, 22, 23, 0.72);
+        --term: #111113;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.47;
+      letter-spacing: -0.022em;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    :focus-visible { outline: 2px solid var(--btn); outline-offset: 3px; border-radius: 8px; }
+    .wrap { max-width: 1024px; margin: 0 auto; padding: 0 22px; }
+
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--nav);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .wrap { height: 52px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 10px; color: var(--text); font-family: var(--display); font-weight: 600; font-size: 19px; }
+    .brand:hover { text-decoration: none; }
+    .brand img { width: 26px; height: 26px; }
+    nav ul { list-style: none; display: flex; gap: 24px; align-items: center; font-size: 12px; }
+    nav ul a { color: var(--text-2); }
+    nav .pill { background: var(--btn); color: #fff; padding: 4px 12px; border-radius: 980px; }
+    nav .pill:hover { background: var(--btn-hover); text-decoration: none; }
+
+    .hero { text-align: center; padding: 96px 0 72px; overflow: hidden; }
+    .hero .icon {
+      width: 148px; height: 148px; margin: 0 auto 28px;
+      filter: drop-shadow(0 24px 48px color-mix(in oklab, var(--accent) 35%, transparent));
+      animation: rise 0.9s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .eyebrow { font-family: var(--display); font-size: 21px; font-weight: 600; color: var(--text-3); margin-bottom: 6px; }
+    h1 {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(44px, 8vw, 80px); line-height: 1.05; letter-spacing: -0.015em;
+      background: linear-gradient(120deg, var(--text) 30%, var(--accent) 70%, var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: rise 0.9s 0.08s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .lead { max-width: 680px; margin: 24px auto 0; font-size: 21px; line-height: 1.38; color: var(--text-2); animation: rise 0.9s 0.16s cubic-bezier(.2,.8,.2,1) both; }
+    .actions { margin-top: 36px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; animation: rise 0.9s 0.24s cubic-bezier(.2,.8,.2,1) both; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 980px; font-size: 17px; font-weight: 500; border: 0; cursor: pointer; font-family: inherit; }
+    .btn:hover { text-decoration: none; }
+    .btn-primary { background: var(--btn); color: #fff; }
+    .btn-primary:hover { background: var(--btn-hover); }
+    .btn-ghost { color: var(--link); background: transparent; box-shadow: inset 0 0 0 1px var(--link); }
+    .meta { margin-top: 18px; font-size: 14px; color: var(--text-3); }
+
+    section { padding: 88px 0; }
+    .section-title { text-align: center; font-family: var(--display); font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; }
+    .section-sub { text-align: center; color: var(--text-3); font-size: 19px; margin: 12px auto 48px; max-width: 600px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .card {
+      background: var(--surface); border-radius: 28px; padding: 32px;
+      border: 1px solid var(--border);
+      transition: transform 0.3s cubic-bezier(.2,.8,.2,1), box-shadow 0.3s;
+    }
+    .card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 20px 48px rgba(0,0,0,0.08); }
+    .card h3 { font-family: var(--display); font-size: 24px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
+    .card h3::before { content: ""; display: block; width: 36px; height: 6px; border-radius: 3px; margin-bottom: 18px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .card p { color: var(--text-3); font-size: 17px; }
+
+    .specs { background: var(--surface); }
+    .specs dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; text-align: center; }
+    .spec dt { font-size: 14px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .spec dd { font-family: var(--display); font-size: 24px; font-weight: 600; }
+
+    .install .terminal { max-width: 720px; margin: 0 auto; background: var(--term); border-radius: 18px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.25); }
+    .term-bar { display: flex; align-items: center; gap: 8px; padding: 14px 16px; background: rgba(255,255,255,0.06); }
+    .term-bar i { width: 12px; height: 12px; border-radius: 50%; background: #ff5f57; }
+    .term-bar i:nth-child(2) { background: #febc2e; }
+    .term-bar i:nth-child(3) { background: #28c840; }
+    .term-bar span { margin-left: auto; color: #8e8e93; font-size: 12px; }
+    .copy { background: rgba(255,255,255,0.1); color: #f5f5f7; border: 0; border-radius: 8px; padding: 6px 12px; font: 500 12px var(--font); cursor: pointer; }
+    .copy:hover { background: rgba(255,255,255,0.18); }
+    pre { padding: 22px 24px 26px; font: 15px/1.8 var(--mono); color: #f5f5f7; overflow-x: auto; }
+    pre .c { color: #8e8e93; }
+    pre .p { color: var(--accent); user-select: none; }
+    .after { text-align: center; max-width: 640px; margin: 28px auto 0; color: var(--text-3); }
+
+    footer { border-top: 1px solid var(--border); padding: 28px 0 40px; font-size: 12px; color: var(--text-3); }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    footer a { color: var(--text-2); }
+
+    .toast { position: fixed; left: 50%; bottom: 32px; transform: translate(-50%, 20px); background: var(--text); color: var(--bg); padding: 10px 18px; border-radius: 980px; font-size: 14px; opacity: 0; transition: 0.3s; pointer-events: none; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+    @media (max-width: 640px) { nav ul li:not(:last-child) { display: none; } .hero { padding: 64px 0 48px; } section { padding: 64px 0; } }
+  </style>
+</head>
+<body>
+  <nav aria-label="Main">
+    <div class="wrap">
+      <a class="brand" href="#top"><img src="icon-web.svg" alt="" width="26" height="26">Cleaner</a>
+      <ul>
+        <li><a href="../">All Apps</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#install">Install</a></li>
+        <li><a href="https://github.com/its-ash/cleaner" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a class="pill" href="https://github.com/its-ash/cleaner/releases/latest" target="_blank" rel="noopener noreferrer">Download</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="wrap">
+        <img class="icon" src="icon-web.svg" alt="Cleaner app icon" width="148" height="148">
+        <p class="eyebrow">Cleaner</p>
+        <h1>Gigabytes back.<br>In one click.</h1>
+        <p class="lead">Cleaner scans your projects for node_modules, Rust target, Flutter and Gradle builds, Pods, DerivedData, and dozens of tool caches. Review what it found, then move it to the Trash.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#install">Install with Homebrew</a>
+          <a class="btn btn-ghost" href="https://github.com/its-ash/cleaner/releases/latest" target="_blank" rel="noopener noreferrer">Download for Mac</a>
+        </div>
+        <p class="meta">Free and open source · macOS 14 Sonoma or later · <span id="ver">Latest release</span></p>
+      </div>
+    </header>
+
+    <section id="features" aria-labelledby="features-title">
+      <div class="wrap">
+        <h2 class="section-title" id="features-title">Everything you need.<br>Nothing you don’t.</h2>
+        <p class="section-sub">Find and delete build output, dependencies, and caches.</p>
+        <div class="grid">
+        <article class="card"><h3>30+ project types</h3><p>node_modules, target, Flutter build and .dart_tool, Gradle, Pods, SwiftPM, Python, .NET, CMake, and more.</p></article>
+        <article class="card"><h3>Global caches</h3><p>Xcode DerivedData and DeviceSupport, Gradle, Maven, npm, Yarn, pnpm, Bun, Cargo, pip, uv, Go, and Homebrew.</p></article>
+        <article class="card"><h3>Smart selection</h3><p>Projects you touched in the last 7 days start unticked, so active work stays safe.</p></article>
+        <article class="card"><h3>Trash or delete</h3><p>Move folders to the Trash and restore them with Put Back, or delete them for good.</p></article>
+        <article class="card"><h3>Projects view</h3><p>Folders are grouped by git repository, so you can clean a whole project at once.</p></article>
+        <article class="card"><h3>History and stats</h3><p>Every cleanup is recorded, with a chart of the space you freed over time.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="specs" aria-label="Specifications">
+      <div class="wrap">
+        <dl>
+        <div class="spec"><dt>Engine</dt><dd>Rust, parallel scan</dd></div>
+        <div class="spec"><dt>App</dt><dd>SwiftUI</dd></div>
+        <div class="spec"><dt>Also</dt><dd>Fast command line tool</dd></div>
+        <div class="spec"><dt>Shortcuts</dt><dd>⌘R scan · ⌘⌫ clean</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="install" id="install" aria-labelledby="install-title">
+      <div class="wrap">
+        <h2 class="section-title" id="install-title">One command away.</h2>
+        <p class="section-sub">Install Cleaner from the its-ash Homebrew tap.</p>
+        <div class="terminal">
+          <div class="term-bar"><i></i><i></i><i></i><span>Terminal</span><button type="button" class="copy" id="copy">Copy</button></div>
+<pre><span class="c"># Add and trust the tap (once)</span>
+<span class="p">$ </span>brew tap its-ash/tap
+<span class="p">$ </span>brew trust its-ash/tap
+<span class="c"># Install Cleaner</span>
+<span class="p">$ </span>brew install --cask cleaner</pre>
+        </div>
+        <p class="after">Open Cleaner from Applications, add your project folders in Settings, then press ⌘R to scan.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>Built by <a href="https://itsash.in" target="_blank" rel="noopener noreferrer">Ashvini Jangid</a>.</p>
+      <p><a href="../">All Mac Apps</a> · <a href="https://github.com/its-ash/cleaner" target="_blank" rel="noopener noreferrer">Source</a> · <a href="https://github.com/its-ash/cleaner/issues" target="_blank" rel="noopener noreferrer">Report an issue</a></p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const cmds = "brew tap its-ash/tap\nbrew trust its-ash/tap\nbrew install --cask cleaner";
+    const toast = document.getElementById("toast");
+    document.getElementById("copy").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(cmds); toast.textContent = "Copied to clipboard"; }
+      catch { toast.textContent = "Copy failed. Select the text instead."; }
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1800);
+    });
+    fetch("https://api.github.com/repos/its-ash/cleaner/releases/latest")
+      .then(r => r.ok ? r.json() : null)
+      .then(j => { if (j && j.tag_name) document.getElementById("ver").textContent = "Version " + j.tag_name.replace(/^v/, ""); })
+      .catch(() => {});
+  </script>
+</body>
+</html>

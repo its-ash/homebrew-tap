@@ -5,7 +5,7 @@ cask "cleaner" do
   url "https://github.com/its-ash/cleaner/releases/download/v#{version}/Cleaner-#{version}-macos.zip"
   name "Cleaner"
   desc "Find and delete build artifacts, dependency folders and caches"
-  homepage "https://github.com/its-ash/cleaner"
+  homepage "https://tap.itsash.in/cleaner/"
 
   livecheck do
     url :url

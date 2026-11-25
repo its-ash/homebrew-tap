@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <rect x="64" y="64" width="896" height="896" rx="216" fill="#0B0C0E"/>
+  <rect x="128" y="128" width="372" height="768" rx="140" fill="#56B4FC"/>
+  <rect x="524" y="128" width="372" height="372" rx="140" fill="#F7941D"/>
+  <rect x="524" y="524" width="372" height="372" rx="140" fill="#F43616"/>
+  <circle cx="710" cy="710" r="104" fill="#0B0C0E"/>
+  <line x1="710" y1="710" x2="710" y2="634" stroke="#F4F5F6" stroke-width="20" stroke-linecap="round"/>
+  <line x1="710" y1="710" x2="768" y2="740" stroke="#2EE66B" stroke-width="20" stroke-linecap="round"/>
+  <circle cx="710" cy="710" r="16" fill="#F43616"/>
+  <circle cx="314" cy="316" r="64" fill="#FFE000"/>
+  <rect x="210" y="640" width="208" height="44" rx="22" fill="#0B0C0E"/>
+  <rect x="210" y="710" width="144" height="44" rx="22" fill="#0B0C0E" opacity="0.72"/>
+  <rect x="616" y="252" width="188" height="44" rx="22" fill="#0B0C0E"/>
+  <rect x="616" y="324" width="120" height="44" rx="22" fill="#0B0C0E" opacity="0.75"/>
+</svg>

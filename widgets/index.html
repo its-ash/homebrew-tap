@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widgets for Mac — Rainbow Bento Desktop Widgets, AI Notes &amp; Local Router</title>
+  <meta name="description" content="28 compact Rainbow Bento desktop widgets for macOS: clocks, weather, calendar, AI 5h limits, resizable sticky notes with AI refine, local AI router, dev ports, tasks, now playing, launcher, paste board, and Google Firebase sync.">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:title" content="Widgets for Mac">
+  <meta property="og:description" content="28 compact Rainbow Bento desktop widgets, resizable AI sticky notes, built-in local AI router, dev tools &amp; Firebase sync for macOS.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tap.itsash.in/widgets/">
+  <link rel="canonical" href="https://tap.itsash.in/widgets/">
+  <link rel="icon" href="icon-web.svg" type="image/svg+xml">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Widgets","operatingSystem":"macOS 15.0+","applicationCategory":"UtilitiesApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://tap.itsash.in/widgets/","downloadUrl":"https://github.com/its-ash/homebrew-tap/releases/download/widgets-v2.0.0/Widgets-2.0.0-macos.zip"}
+  </script>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --canvas: #f2f4f7;
+      --surface: #ffffff;
+      --elevated: #f4f6fa;
+      --border: #e5e8ef;
+      --ink: #111318;
+      --ink-2: #4b5263;
+      --ink-3: #687082;
+      --nav-bg: rgba(242, 244, 247, 0.78);
+      --term-bg: #181a1f;
+
+      --blue: #1d82ff;
+      --blue-soft: #ebf4ff;
+      --violet: #7950ff;
+      --pink: #ff4fa7;
+      --gold: #ffbf34;
+      --green: #18b95c;
+      --coral: #f04438;
+      --orange: #ff8a1e;
+      --obsidian: #22242a;
+
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Rounded", "Helvetica Neue", Arial, sans-serif;
+      --display: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+      --mono: "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --shadow-sm: 0 2px 10px rgba(17, 19, 24, 0.05);
+      --shadow-md: 0 12px 32px rgba(17, 19, 24, 0.09);
+      --shadow-lg: 0 24px 64px rgba(17, 19, 24, 0.14);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --canvas: #0f1115;
+        --surface: #181b22;
+        --elevated: #222631;
+        --border: rgba(255, 255, 255, 0.1);
+        --ink: #f5f7fb;
+        --ink-2: #b9c0cf;
+        --ink-3: #8c95a8;
+        --nav-bg: rgba(15, 17, 21, 0.78);
+        --blue-soft: rgba(29, 130, 255, 0.16);
+        --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.28);
+        --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.42);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--canvas);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: -0.014em;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 8px; }
+    img, svg { display: block; }
+
+    .wrap {
+      max-inline-size: 1120px;
+      margin-inline: auto;
+      padding-inline: 24px;
+    }
+
+    /* ===== Nav ===== */
+    .nav {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 50;
+      background: var(--nav-bg);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-block-end: 1px solid var(--border);
+    }
+    .nav__inner {
+      block-size: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+    .brand:hover { text-decoration: none; }
+    .brand__badge {
+      inline-size: 28px;
+      block-size: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(29, 130, 255, 0.28);
+    }
+    .nav__links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .nav__links a { color: var(--ink-2); }
+    .nav__links a:hover { color: var(--ink); text-decoration: none; }
+    .nav__cta {
+      background: var(--blue);
+      color: #fff !important;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .nav__cta:hover { filter: brightness(1.06); }
+
+    /* ===== Hero ===== */
+    .hero {
+      text-align: center;
+      padding-block: 68px 40px;
+    }
+    .hero__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-2);
+      margin-block-end: 22px;
+    }
+    .dot-live {
+      inline-size: 8px;
+      block-size: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 3px rgba(24, 185, 92, 0.2);
+    }
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(40px, 6.2vw, 68px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      max-inline-size: 820px;
+      margin-inline: auto;
+    }
+    .hero h1 .grad {
+      background: linear-gradient(105deg, var(--blue) 0%, var(--violet) 52%, var(--pink) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero__lead {
+      max-inline-size: 680px;
+      margin: 20px auto 0;
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.5;
+      color: var(--ink-2);
+    }
+    .hero__actions {
+      margin-block-start: 28px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-block-size: 46px;
+      padding-inline: 22px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 600;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform 140ms ease, filter 140ms ease, border-color 140ms ease;
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn--primary {
+      background: linear-gradient(135deg, var(--blue), #1668e3);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(29, 130, 255, 0.28);
+    }
+    .btn--secondary {
+      background: var(--surface);
+      color: var(--ink);
+      border-color: var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn--secondary:hover { border-color: var(--blue); }
+    .hero__meta {
+      margin-block-start: 16px;
+      font-size: 13px;
+      color: var(--ink-3);
+      font-weight: 500;
+    }
+
+    /* ===== Interactive Rainbow Bento Showcase ===== */
+    .showcase {
+      padding-block: 16px 76px;
+    }
+    .theme-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-block-end: 26px;
+    }
+    .theme-bar__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-inline-end: 4px;
+    }
+    .swatch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--ink-2);
+      border: 1px solid var(--border);
+      font: 600 12px var(--display);
+      cursor: pointer;
+      transition: border-color 120ms ease, box-shadow 120ms ease, color 120ms ease;
+    }
+    .swatch-btn[aria-pressed="true"] {
+      color: var(--ink);
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(29, 130, 255, 0.18);
+    }
+    .swatch-dot {
+      inline-size: 10px;
+      block-size: 10px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.14);
+    }
+
+    .bento-board {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+      padding: 22px;
+      border-radius: 30px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .tile {
+      --t-bg: linear-gradient(145deg, #ffffff, #f8f9fc);
+      --t-border: rgba(17, 19, 24, 0.08);
+      --t-ink: #111318;
+      --t-ink2: #5b6270;
+      --t-eyebrow: #7c8496;
+      --t-sub: #f1f3f8;
+      --t-pill: #e8ecf4;
+      --t-accent: #1d82ff;
+
+      background: var(--t-bg);
+      color: var(--t-ink);
+      border: 1px solid var(--t-border);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: 0 6px 20px rgba(17, 19, 24, 0.07);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      min-inline-size: 0;
+      transition: transform 200ms cubic-bezier(.2, .8, .2, 1);
+    }
+    .tile:hover { transform: translateY(-3px); }
+
+    .tile[data-finish="cobalt"],
+    .bento-board[data-override="cobalt"] .tile {
+      --t-bg: linear-gradient(145deg, #1d82ff, #3da2ff);
+      --t-border: rgba(255, 255, 255, 0.22);
+      --t-ink: #ffffff;
+      --t-ink2: rgba(255, 255, 255, 0.86);
+      --t-eyebrow: rgba(255, 255, 255, 0.74);
+      --t-sub: rgba(255, 255, 255, 0.18);
+      --t-pill: rgba(255, 255, 255, 0.24);
+      --t-accent: #ffffff;
+    }
+    .tile[data-finish="violet"],
+    .bento-board[data-override="violet"] .tile {
+      --t-bg: linear-gradient(145deg, #744bff, #9c74ff);
+      --t-border: rgba(255, 255, 255, 0.22);
+      --t-ink: #ffffff;
+      --t-ink2: rgba(255, 255, 255, 0.86);
+      --t-eyebrow: rgba(255, 255, 255, 0.74);
+      --t-sub: rgba(255, 255, 255, 0.18);
+      --t-pill: rgba(255, 255, 255, 0.24);
+      --t-accent: #ffffff;
+    }
+    .tile[data-finish="rose"],
+    .bento-board[data-override="rose"] .tile {
+      --t-bg: linear-gradient(145deg, #ff499e, #ff7bc0);
+      --t-border: rgba(255, 255, 255, 0.22);
+      --t-ink: #ffffff;
+      --t-ink2: rgba(255, 255, 255, 0.86);
+      --t-eyebrow: rgba(255, 255, 255, 0.74);
+      --t-sub: rgba(255, 255, 255, 0.18);
+      --t-pill: rgba(255, 255, 255, 0.24);
+      --t-accent: #ffffff;
+    }
+    .tile[data-finish="tangerine"],
+    .bento-board[data-override="tangerine"] .tile {
+      --t-bg: linear-gradient(145deg, #ffd966, #ffbf34);
+      --t-border: rgba(0, 0, 0, 0.08);
+      --t-ink: #1e1807;
+      --t-ink2: #4a3c12;
+      --t-eyebrow: #6b571a;
+      --t-sub: rgba(0, 0, 0, 0.08);
+      --t-pill: rgba(0, 0, 0, 0.1);
+      --t-accent: #1e1807;
+    }
+    .tile[data-finish="obsidian"],
+    .bento-board[data-override="obsidian"] .tile {
+      --t-bg: linear-gradient(145deg, #262930, #1a1c21);
+      --t-border: rgba(255, 255, 255, 0.12);
+      --t-ink: #f7f8fa;
+      --t-ink2: #a5adbd;
+      --t-eyebrow: #858d9e;
+      --t-sub: rgba(255, 255, 255, 0.08);
+      --t-pill: rgba(255, 255, 255, 0.13);
+      --t-accent: #4ea7ff;
+    }
+    .bento-board[data-override="silver"] .tile {
+      --t-bg: linear-gradient(145deg, #ffffff, #f8f9fc);
+      --t-border: rgba(17, 19, 24, 0.08);
+      --t-ink: #111318;
+      --t-ink2: #5b6270;
+      --t-eyebrow: #7c8496;
+      --t-sub: #f1f3f8;
+      --t-pill: #e8ecf4;
+      --t-accent: #1d82ff;
+    }
+
+    .span-3 { grid-column: span 3; }
+    .span-4 { grid-column: span 4; }
+    .span-5 { grid-column: span 5; }
+    .span-6 { grid-column: span 6; }
+
+    .t-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .t-eyebrow {
+      font: 700 10px var(--display);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--t-eyebrow);
+    }
+    .t-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font: 700 11px var(--display);
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--t-pill);
+      color: var(--t-ink);
+    }
+    .t-clock {
+      font: 800 38px/1 var(--display);
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+    .t-clock small { font-size: 16px; opacity: 0.72; font-weight: 700; }
+
+    .t-list { display: grid; gap: 6px; }
+    .t-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 9px;
+      border-radius: 10px;
+      background: var(--t-sub);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .t-mono {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .t-dot {
+      inline-size: 7px;
+      block-size: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .t-bar {
+      block-size: 6px;
+      border-radius: 999px;
+      background: var(--t-sub);
+      overflow: clip;
+    }
+    .t-bar > i {
+      display: block;
+      block-size: 100%;
+      border-radius: 999px;
+    }
+
+    .np-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .np-art {
+      inline-size: 78px;
+      block-size: 78px;
+      border-radius: 14px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--violet), var(--pink), var(--orange));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 26px;
+    }
+    .np-info { flex: 1; min-inline-size: 0; display: grid; gap: 5px; }
+    .np-title { font: 700 15px var(--display); white-space: nowrap; overflow: clip; text-overflow: ellipsis; }
+    .np-artist { font-size: 12px; color: var(--t-ink2); }
+
+    .paste-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+    .paste-slot {
+      border-radius: 11px;
+      padding: 8px;
+      min-block-size: 62px;
+      background: var(--t-sub);
+      font-size: 10.5px;
+      font-weight: 600;
+      line-height: 1.3;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: clip;
+    }
+    .paste-slot--img {
+      padding: 0;
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 18px;
+    }
+    .paste-slot--img2 {
+      padding: 0;
+      background: linear-gradient(135deg, var(--pink), var(--orange));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .task-btn {
+      width: 100%;
+      border: 0;
+      text-align: start;
+      cursor: pointer;
+      color: inherit;
+      font: inherit;
+    }
+    .task-btn[data-done="true"] .task-label {
+      text-decoration: line-through;
+      opacity: 0.55;
+    }
+
+    .launcher-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+    .launcher-item {
+      border-radius: 11px;
+      padding: 9px 6px;
+      background: var(--t-sub);
+      display: grid;
+      justify-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      font-weight: 700;
+    }
+    .launcher-ico {
+      inline-size: 26px;
+      block-size: 26px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    /* ===== Sections ===== */
+    section { padding-block: 72px; }
+    .sec-head {
+      text-align: center;
+      max-inline-size: 660px;
+      margin: 0 auto 44px;
+    }
+    .sec-head h2 {
+      font-family: var(--display);
+      font-size: clamp(30px, 4.4vw, 44px);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.08;
+    }
+    .sec-head p {
+      margin-block-start: 12px;
+      font-size: 18px;
+      color: var(--ink-2);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 18px;
+    }
+    .f-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: var(--shadow-sm);
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+    .f-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .f-bar {
+      inline-size: 38px;
+      block-size: 6px;
+      border-radius: 999px;
+      margin-block-end: 4px;
+    }
+    .f-card h3 {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+    .f-card p {
+      color: var(--ink-2);
+      font-size: 15px;
+      line-height: 1.52;
+    }
+
+    /* ===== Specs ===== */
+    .specs {
+      background: var(--surface);
+      border-block: 1px solid var(--border);
+      padding-block: 52px;
+    }
+    .specs__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 24px;
+      text-align: center;
+    }
+    .specs dt {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-3);
+      margin-block-end: 6px;
+    }
+    .specs dd {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    /* ===== Install ===== */
+    .terminal {
+      max-inline-size: 720px;
+      margin-inline: auto;
+      background: var(--term-bg);
+      color: #f5f7fb;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow-lg);
+      overflow: clip;
+    }
+    .term-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-block-end: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .term-bar i { inline-size: 11px; block-size: 11px; border-radius: 50%; background: #ff5f57; }
+    .term-bar i:nth-child(2) { background: #febc2e; }
+    .term-bar i:nth-child(3) { background: #28c840; }
+    .term-bar span { margin-inline-start: auto; font-size: 12px; color: #9aa2b2; }
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      padding: 5px 12px;
+      font: 600 12px var(--font);
+      cursor: pointer;
+    }
+    .copy-btn:hover { background: rgba(255, 255, 255, 0.2); }
+    pre {
+      padding: 20px 22px 24px;
+      font: 14.5px/1.8 var(--mono);
+      overflow-x: auto;
+    }
+    pre .c { color: #8b93a5; }
+    pre .p { color: #4ea7ff; user-select: none; }
+    .install-note {
+      max-inline-size: 720px;
+      margin: 20px auto 0;
+      padding: 16px 20px;
+      border-radius: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--ink-2);
+    }
+    .install-note code {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: var(--elevated);
+      color: var(--ink);
+    }
+
+    footer {
+      border-block-start: 1px solid var(--border);
+      padding-block: 28px 40px;
+      font-size: 13px;
+      color: var(--ink-3);
+    }
+    .foot__inner {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer a { color: var(--ink-2); font-weight: 500; }
+
+    .toast {
+      position: fixed;
+      inset-inline-start: 50%;
+      inset-block-end: 28px;
+      transform: translate(-50%, 16px);
+      background: var(--ink);
+      color: var(--canvas);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13.5px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease, transform 200ms ease;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 900px) {
+      .span-3, .span-4, .span-5, .span-6 { grid-column: span 6; }
+    }
+    @media (max-width: 640px) {
+      .nav__links li:not(:last-child) { display: none; }
+      .span-3, .span-4, .span-5, .span-6 { grid-column: span 12; }
+      .bento-board { padding: 14px; gap: 12px; }
+      .hero { padding-block: 48px 28px; }
+      section { padding-block: 52px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Main">
+    <div class="wrap nav__inner">
+      <a class="brand" href="#top">
+        <span class="brand__badge" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="18" height="7" rx="1.5"/></svg>
+        </span>
+        Widgets
+      </a>
+      <ul class="nav__links">
+        <li><a href="../">All Apps</a></li>
+        <li><a href="#showcase">Showcase</a></li>
+        <li><a href="#features">28 Widgets</a></li>
+        <li><a href="#install">Install</a></li>
+        <li><a class="nav__cta" data-download-link href="https://github.com/its-ash/homebrew-tap/releases/download/widgets-v2.0.0/Widgets-2.0.0-macos.zip" target="_blank" rel="noopener noreferrer">Download</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="wrap">
+        <p class="hero__eyebrow">
+          <span class="dot-live" aria-hidden="true"></span>
+          <span>macOS 15 Sequoia+ · 28 Native Widgets · <strong id="ver">v2.0.0</strong></span>
+        </p>
+        <h1>Your Mac desktop,<br><span class="grad">alive in Rainbow Bento.</span></h1>
+        <p class="hero__lead">Compact native Swift 6 desktop widgets — clocks, weather, calendar, AI 5-hour limits, resizable sticky notes with AI refine, built-in local AI router, dev ports, tasks, music, launcher, and a 9-slot paste board.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#install">Install with Homebrew</a>
+          <a class="btn btn--secondary" data-download-link href="https://github.com/its-ash/homebrew-tap/releases/download/widgets-v2.0.0/Widgets-2.0.0-macos.zip" target="_blank" rel="noopener noreferrer">Download for Mac</a>
+          <a class="btn btn--secondary" href="../">All Mac Apps</a>
+        </div>
+        <p class="hero__meta">Free for macOS · Zero external Swift dependencies · Google Sign-In + Firebase Cloud Sync</p>
+      </div>
+    </header>
+
+    <section class="showcase" id="showcase" aria-label="Interactive Widget Showcase">
+      <div class="wrap">
+        <div class="theme-bar" role="group" aria-label="Preview card theme">
+          <span class="theme-bar__label">Card Theme</span>
+          <button type="button" class="swatch-btn" data-theme="auto" aria-pressed="true">Auto</button>
+          <button type="button" class="swatch-btn" data-theme="silver" aria-pressed="false"><span class="swatch-dot" style="background:#fff"></span>White</button>
+          <button type="button" class="swatch-btn" data-theme="cobalt" aria-pressed="false"><span class="swatch-dot" style="background:#1d82ff"></span>Blue</button>
+          <button type="button" class="swatch-btn" data-theme="violet" aria-pressed="false"><span class="swatch-dot" style="background:#7950ff"></span>Violet</button>
+          <button type="button" class="swatch-btn" data-theme="rose" aria-pressed="false"><span class="swatch-dot" style="background:#ff4fa7"></span>Pink</button>
+          <button type="button" class="swatch-btn" data-theme="tangerine" aria-pressed="false"><span class="swatch-dot" style="background:#ffbf34"></span>Gold</button>
+          <button type="button" class="swatch-btn" data-theme="obsidian" aria-pressed="false"><span class="swatch-dot" style="background:#22242a"></span>Dark</button>
+        </div>
+
+        <div class="bento-board" id="board">
+          <article class="tile span-3" data-finish="cobalt">
+            <div class="t-head">
+              <span class="t-eyebrow">Digital Bento</span>
+              <span class="t-pill">22° Clear</span>
+            </div>
+            <div class="t-clock" id="live-clock">10:09<small>:42</small></div>
+            <div class="t-head">
+              <span style="font-size:12px;font-weight:600;color:var(--t-ink2)" id="live-date">Wed, Nov 25</span>
+              <span class="t-pill">2×2</span>
+            </div>
+          </article>
+
+          <article class="tile span-4" data-finish="silver">
+            <div class="t-head">
+              <span class="t-eyebrow">AI 5-Hour Limits</span>
+              <span class="t-pill">Live</span>
+            </div>
+            <div class="t-list">
+              <div>
+                <div class="t-head" style="margin-block-end:4px"><span style="font-size:12px;font-weight:700">Claude</span><span class="t-mono">78% left</span></div>
+                <div class="t-bar"><i style="inline-size:78%;background:#e2724b"></i></div>
+              </div>
+              <div>
+                <div class="t-head" style="margin-block-end:4px"><span style="font-size:12px;font-weight:700">Gemini</span><span class="t-mono">91% left</span></div>
+                <div class="t-bar"><i style="inline-size:91%;background:linear-gradient(90deg,#2e74ff,#9160ff)"></i></div>
+              </div>
+              <div>
+                <div class="t-head" style="margin-block-end:4px"><span style="font-size:12px;font-weight:700">Codex</span><span class="t-mono">64% left</span></div>
+                <div class="t-bar"><i style="inline-size:64%;background:#14b87a"></i></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tile span-5" data-finish="obsidian">
+            <div class="t-head">
+              <span class="t-eyebrow">Now Playing</span>
+              <span class="t-pill"><span class="t-dot" style="background:#34d399"></span>Spotify</span>
+            </div>
+            <div class="np-wrap">
+              <div class="np-art" aria-hidden="true">♪</div>
+              <div class="np-info">
+                <div class="np-title">Midnight City</div>
+                <div class="np-artist">M83 · Hurry Up, We're Dreaming</div>
+                <div class="t-bar"><i style="inline-size:44%;background:#4ea7ff"></i></div>
+                <div class="t-head t-mono" style="color:var(--t-eyebrow)"><span>1:42</span><span>4:03</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tile span-4" data-finish="tangerine">
+            <div class="t-head">
+              <span class="t-eyebrow">Quick Note · Resizable</span>
+              <span class="t-pill">✨ AI Refine</span>
+            </div>
+            <div class="t-list" style="font-size:12.5px;font-weight:600">
+              <div>☑ Merge NoteIt &amp; Router</div>
+              <div>☑ Add Google + Firebase Sync</div>
+              <div>☐ Ship Widgets v2.0 release</div>
+            </div>
+            <div class="t-head">
+              <span style="font-size:11px;color:var(--t-ink2)">⌃⌥N global capture · ⌘0 All Notes</span>
+            </div>
+          </article>
+
+          <article class="tile span-4" data-finish="silver">
+            <div class="t-head">
+              <span class="t-eyebrow">AI Router Server</span>
+              <span class="t-pill"><span class="t-dot" style="background:#18b95c"></span>Running</span>
+            </div>
+            <div class="t-row" style="justify-content:space-between">
+              <span class="t-mono">http://127.0.0.1:9694/v1</span>
+              <button type="button" class="t-pill" style="border:0;cursor:pointer" id="copy-router">Copy</button>
+            </div>
+            <div style="font-size:12px;color:var(--t-ink2)">Mount-gated OpenAI proxy across NVIDIA, OpenRouter, Groq, Cloudflare, Ollama &amp; HF.</div>
+          </article>
+
+          <article class="tile span-4" data-finish="violet">
+            <div class="t-head">
+              <span class="t-eyebrow">Local Ports</span>
+              <span class="t-pill">3 active</span>
+            </div>
+            <div class="t-list">
+              <div class="t-row"><span class="t-dot" style="background:#86efac"></span><span class="t-mono">:3000</span><span>next-server</span></div>
+              <div class="t-row"><span class="t-dot" style="background:#86efac"></span><span class="t-mono">:5173</span><span>vite</span></div>
+              <div class="t-row"><span class="t-dot" style="background:#86efac"></span><span class="t-mono">:9694</span><span>MyMac Router</span></div>
+            </div>
+          </article>
+
+          <article class="tile span-4" data-finish="silver">
+            <div class="t-head">
+              <span class="t-eyebrow">Quick Tasks</span>
+              <span class="t-pill">Reminders Sync</span>
+            </div>
+            <div class="t-list">
+              <button type="button" class="t-row task-btn" data-done="false"><span aria-hidden="true">○</span><span class="task-label">Review PR #42 &amp; release notes</span></button>
+              <button type="button" class="t-row task-btn" data-done="false"><span aria-hidden="true">○</span><span class="task-label">Test Google Sign-In on second Mac</span></button>
+              <button type="button" class="t-row task-btn" data-done="true"><span aria-hidden="true">✓</span><span class="task-label">Update Homebrew tap cask</span></button>
+            </div>
+          </article>
+
+          <article class="tile span-4" data-finish="silver">
+            <div class="t-head">
+              <span class="t-eyebrow">Paste Board · ⌘V</span>
+              <span class="t-pill">6/9</span>
+            </div>
+            <div class="paste-grid">
+              <div class="paste-slot"><span>📋</span><span>https://tap.itsash.in</span></div>
+              <div class="paste-slot paste-slot--img" aria-label="Image thumbnail">🖼</div>
+              <div class="paste-slot"><span>📋</span><span>xattr -cr Widgets</span></div>
+              <div class="paste-slot paste-slot--img2" aria-label="Screenshot thumbnail">✦</div>
+              <div class="paste-slot"><span>📋</span><span>git push origin main</span></div>
+              <div class="paste-slot" style="align-items:center;justify-content:center;opacity:0.65;border:1px dashed var(--t-border)">+ Paste</div>
+            </div>
+          </article>
+
+          <article class="tile span-4" data-finish="rose">
+            <div class="t-head">
+              <span class="t-eyebrow">Quick Launcher</span>
+              <span class="t-pill">6 tiles</span>
+            </div>
+            <div class="launcher-grid">
+              <div class="launcher-item"><span class="launcher-ico" style="background:#22242a">&gt;_</span><span>Terminal</span></div>
+              <div class="launcher-item"><span class="launcher-ico" style="background:#7950ff">&lt;/&gt;</span><span>GitHub</span></div>
+              <div class="launcher-item"><span class="launcher-ico" style="background:#1d82ff">↓</span><span>Downloads</span></div>
+              <div class="launcher-item"><span class="launcher-ico" style="background:#18b95c">◎</span><span>Localhost</span></div>
+              <div class="launcher-item"><span class="launcher-ico" style="background:#ff8a1e">▣</span><span>Desktop</span></div>
+              <div class="launcher-item"><span class="launcher-ico" style="background:#f04438">♥</span><span>Activity</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" aria-labelledby="features-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="features-title">One lightweight app.<br>28 compact desktop widgets.</h2>
+          <p>Built natively in Swift 6, SwiftUI, and AppKit with demand-gated polling (~0.5% idle CPU) and instant single-Desktop swipe pinning.</p>
+        </div>
+        <div class="features-grid">
+          <article class="f-card">
+            <div class="f-bar" style="background:linear-gradient(90deg,#1d82ff,#4ea7ff)"></div>
+            <h3>Time, Date, Weather &amp; Calendar</h3>
+            <p>Analog Precision, Digital Bento, Dual World Clock, World Clock Studio, Date Progress, Open-Meteo Weather, and Apple Calendar with full schedule timelines.</p>
+          </article>
+          <article class="f-card">
+            <div class="f-bar" style="background:linear-gradient(90deg,#ffd966,#ff8a1e)"></div>
+            <h3>Sticky Notes &amp; AI Refine</h3>
+            <p>Resizable Quick Note, rich-text Note Pad, Notes List, All Notes window (⌘0), global capture hotkey (⌃⌥N), checklists, daily backups, and one-click AI actions.</p>
+          </article>
+          <article class="f-card">
+            <div class="f-bar" style="background:linear-gradient(90deg,#18b95c,#14b87a)"></div>
+            <h3>Built-in Local AI Router</h3>
+            <p>Mount AI Router Server or AI Router Chat to run a local OpenAI-compatible proxy on port 9694 across 6 free &amp; paid providers with automatic failover.</p>
+          </article>
+          <article class="f-card">
+            <div class="f-bar" style="background:linear-gradient(90deg,#7950ff,#ff4fa7)"></div>
+            <h3>AI Limits &amp; Dev Tools</h3>
+            <p>Live 5-hour session caps for Claude, Gemini, and Codex, plus Local Ports (open, copy, stop localhost servers) and PM2 process monitoring.</p>
+          </article>
+          <article class="f-card">
+            <div class="f-bar" style="background:linear-gradient(90deg,#ff4fa7,#f04438)"></div>
+            <h3>Tasks, Music, Launcher &amp; Paste Board</h3>
+            <p>Interactive Quick Tasks with Apple Reminders sync, Spotify &amp; Apple Music Now Playing controls, customizable Quick Launcher tiles, and a 9-slot text/image Paste Board.</p>
+          </article>
+          <article class="f-card">
+            <div class="f-bar" style="background:linear-gradient(90deg,#1d82ff,#7950ff)"></div>
+            <h3>Google Sign-In &amp; Firebase Sync</h3>
+            <p>Sign in with Google to sync your Notes, Desktop widget layout, Settings, Quick Tasks, and Quick Launcher across Macs while keeping your Paste Board private and local.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="specs" aria-label="Specifications">
+      <div class="wrap">
+        <dl class="specs__grid">
+          <div><dt>Widgets</dt><dd>28 Across 10 Categories</dd></div>
+          <div><dt>Themes</dt><dd>6 Rainbow Card Finishes</dd></div>
+          <div><dt>Engine</dt><dd>Swift 6 · SwiftUI · AppKit</dd></div>
+          <div><dt>Requirement</dt><dd>macOS 15.0+ Sequoia</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section id="install" aria-labelledby="install-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="install-title">Install in one command.</h2>
+          <p>Available on the its-ash Homebrew tap or as a direct release zip.</p>
+        </div>
+
+        <div class="terminal">
+          <div class="term-bar">
+            <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+            <span>Terminal</span>
+            <button type="button" class="copy-btn" id="copy-brew">Copy</button>
+          </div>
+<pre><span class="c"># Add and trust the tap (once)</span>
+<span class="p">$ </span>brew tap its-ash/tap
+<span class="p">$ </span>brew trust its-ash/tap
+<span class="c"># Install Widgets</span>
+<span class="p">$ </span>brew install --cask widgets</pre>
+        </div>
+
+        <p class="install-note">
+          <strong>Direct download?</strong> Unzip, drag <code>Widgets.app</code> to Applications, then run <code>xattr -cr /Applications/Widgets.app</code> in Terminal so macOS Gatekeeper lets it open. Homebrew runs this automatically.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot__inner">
+      <p>Built by <a href="https://itsash.in" target="_blank" rel="noopener noreferrer">Ashvini Jangid</a>.</p>
+      <p>
+        <a href="../">All Mac Apps</a> ·
+        <a href="https://github.com/its-ash/homebrew-tap" target="_blank" rel="noopener noreferrer">Homebrew Tap</a> ·
+        <a href="https://github.com/its-ash/homebrew-tap/releases" target="_blank" rel="noopener noreferrer">Releases</a> ·
+        <a href="https://github.com/its-ash/homebrew-tap/issues" target="_blank" rel="noopener noreferrer">Issues</a>
+      </p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const toast = document.getElementById("toast");
+    let toastTimer;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    // Interactive theme preview switcher
+    const board = document.getElementById("board");
+    document.querySelectorAll(".swatch-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".swatch-btn").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+        const theme = btn.dataset.theme;
+        if (theme === "auto") board.removeAttribute("data-override");
+        else board.setAttribute("data-override", theme);
+      });
+    });
+
+    // Live local clock preview
+    const clockEl = document.getElementById("live-clock");
+    const dateEl = document.getElementById("live-date");
+    function tickClock() {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, "0");
+      const mm = String(now.getMinutes()).padStart(2, "0");
+      const ss = String(now.getSeconds()).padStart(2, "0");
+      clockEl.innerHTML = `${hh}:${mm}<small>:${ss}</small>`;
+      dateEl.textContent = now.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
+    }
+    tickClock();
+    setInterval(tickClock, 1000);
+
+    // Interactive task checkboxes in preview
+    document.querySelectorAll(".task-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const done = btn.dataset.done === "true";
+        btn.dataset.done = String(!done);
+        btn.firstElementChild.textContent = done ? "○" : "✓";
+      });
+    });
+
+    // Copy buttons
+    const brewCmds = "brew tap its-ash/tap\nbrew trust its-ash/tap\nbrew install --cask widgets";
+    document.getElementById("copy-brew").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(brewCmds); showToast("Copied Homebrew commands"); }
+      catch { showToast("Copy failed — select manually"); }
+    });
+    document.getElementById("copy-router").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText("http://127.0.0.1:9694/v1"); showToast("Copied http://127.0.0.1:9694/v1"); }
+      catch { showToast("Copy failed"); }
+    });
+
+    // Fetch latest Widgets release from public homebrew-tap releases
+    fetch("https://api.github.com/repos/its-ash/homebrew-tap/releases")
+      .then(r => r.ok ? r.json() : [])
+      .then(list => {
+        const rel = Array.isArray(list) ? list.find(x => x.tag_name && x.tag_name.startsWith("widgets-v")) : null;
+        if (!rel) return;
+        const ver = rel.tag_name.replace(/^widgets-/, "");
+        document.getElementById("ver").textContent = ver;
+        const asset = (rel.assets || []).find(a => a.name && a.name.endsWith(".zip"));
+        if (asset && asset.browser_download_url) {
+          document.querySelectorAll("[data-download-link]").forEach(a => a.setAttribute("href", asset.browser_download_url));
+        }
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>

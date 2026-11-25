@@ -5,7 +5,7 @@ cask "nodio" do
   url "https://github.com/its-ash/Nodio/releases/download/v#{version}/Nodio.dmg"
   name "Nodio"
   desc "Voice to text, on your Mac"
-  homepage "https://github.com/its-ash/Nodio"
+  homepage "https://tap.itsash.in/nodio/"
 
   livecheck do
     url :url
