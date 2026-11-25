@@ -5,7 +5,7 @@ cask "widgets" do
   url "https://github.com/its-ash/widgets/releases/download/v#{version}/Widgets-#{version}-macos.zip"
   name "Widgets"
   desc "Bento desktop widgets, sticky notes with AI, local AI router, and tools"
-  homepage "https://widgets.itsash.in"
+  homepage "https://widgets.itsash.in/"
 
   livecheck do
     url :url
