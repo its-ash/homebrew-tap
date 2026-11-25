@@ -8,9 +8,7 @@ Homebrew Casks for Ash macOS applications.
 brew tap its-ash/tap
 brew trust its-ash/tap
 brew install --cask nodio
-brew install --cask router
 brew install --cask kode
-brew install --cask noteit
 brew install --cask widgets
 brew install --cask cleaner
 ```
@@ -20,19 +18,16 @@ brew install --cask cleaner
 | Cask | Description |
 | --- | --- |
 | [nodio](Casks/nodio.rb) | Voice to text, on your Mac |
-| [router](Casks/router.rb) | Native macOS AI routing client |
-| [kode](Casks/kode.rb) | Native macOS coding agent powered by Router |
-| [noteit](Casks/noteit.rb) | Sticky notes with AI refine |
-| [widgets](Casks/widgets.rb) | Bento-style desktop widgets |
+| [kode](Casks/kode.rb) | Native macOS coding agent |
+| [widgets](Casks/widgets.rb) | Bento desktop widgets, sticky notes with AI, local AI router, dev & utility tools |
 | [cleaner](Casks/cleaner.rb) | Find and delete build artifacts, dependency folders and caches |
 
 ## Updating a Cask
 
 ```bash
 # Bump version + sha256 after a new release
-shasum -a 256 Nodio.dmg
-# Edit Casks/<name>.rb with the new version and sha256
-brew style Casks/<name>.rb
-brew audit --cask <name>
-brew install --cask <name>
+scripts/release.sh widgets 2.0.0
+brew style Casks/widgets.rb
+brew audit --cask widgets
+brew install --cask widgets
 ```

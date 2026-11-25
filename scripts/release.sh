@@ -3,12 +3,10 @@ set -euo pipefail
 
 if [[ $# -lt 2 ]]; then
   echo "Usage: $0 <app> <version>"
-  echo "  app: nodio, router, kode, noteit, widgets, or cleaner"
+  echo "  app: nodio, kode, widgets, or cleaner"
   echo "  e.g. $0 nodio 1.0.0"
-  echo "  e.g. $0 router 1.0.0"
   echo "  e.g. $0 kode 1.0.0"
-  echo "  e.g. $0 noteit 1.0.0"
-  echo "  e.g. $0 widgets 1.0.0"
+  echo "  e.g. $0 widgets 2.0.0"
   echo "  e.g. $0 cleaner 0.2.0"
   exit 1
 fi
@@ -24,26 +22,12 @@ case "$APP" in
     DOWNLOAD_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${ZIP_NAME}"
     AUDIT_NAME="nodio"
     ;;
-  router)
-    REPO="its-ash/router"
-    CASK_FILE="Casks/router.rb"
-    ZIP_NAME="Router-${VERSION}-macos.zip"
-    DOWNLOAD_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${ZIP_NAME}"
-    AUDIT_NAME="router"
-    ;;
   kode)
     REPO="its-ash/kode"
     CASK_FILE="Casks/kode.rb"
     ZIP_NAME="Kode-${VERSION}-macos.zip"
     DOWNLOAD_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${ZIP_NAME}"
     AUDIT_NAME="kode"
-    ;;
-  noteit)
-    REPO="its-ash/noteit"
-    CASK_FILE="Casks/noteit.rb"
-    ZIP_NAME="NoteIt-${VERSION}-macos.zip"
-    DOWNLOAD_URL="https://github.com/${REPO}/releases/download/v${VERSION}/${ZIP_NAME}"
-    AUDIT_NAME="noteit"
     ;;
   widgets)
     REPO="its-ash/widgets"
@@ -60,7 +44,7 @@ case "$APP" in
     AUDIT_NAME="cleaner"
     ;;
   *)
-    echo "Unknown app: $APP. Use 'nodio', 'router', 'kode', 'noteit', 'widgets', or 'cleaner'"
+    echo "Unknown app: $APP. Use 'nodio', 'kode', 'widgets', or 'cleaner'"
     exit 1
     ;;
 esac

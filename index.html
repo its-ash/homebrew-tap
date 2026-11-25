@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ash Homebrew Tap: Nodio, Router, Kode, NoteIt, Widgets & Cleaner</title>
-  <meta name="description" content="Homebrew tap for Ash's native macOS apps. Install Nodio (voice to text), Router (AI routing client), Kode (coding agent), NoteIt (sticky notes), Widgets (desktop widgets), and Cleaner (build cache cleaner) with one command.">
+  <title>Ash Homebrew Tap: Nodio, Kode, Widgets & Cleaner</title>
+  <meta name="description" content="Homebrew tap for Ash's native macOS apps. Install Nodio (voice to text), Kode (coding agent), Widgets (bento desktop widgets, AI sticky notes & local AI router), and Cleaner (build cache cleaner) with one command.">
   <style>
     :root {
       --bg: #f5f5f7;
@@ -275,17 +275,11 @@
     .app-card__icon--nodio {
       background: linear-gradient(145deg, #0a84ff 0%, #0051d5 100%);
     }
-    .app-card__icon--router {
-      background: linear-gradient(145deg, #32d74b 0%, #248a3d 100%);
-    }
     .app-card__icon--kode {
       background: linear-gradient(145deg, #bf5af2 0%, #8944ab 100%);
     }
-    .app-card__icon--noteit {
-      background: linear-gradient(145deg, #ffd60a 0%, #ff9f0a 100%);
-    }
     .app-card__icon--widgets {
-      background: linear-gradient(145deg, #ff6482 0%, #d1335b 100%);
+      background: linear-gradient(145deg, #1d82ff 0%, #7950ff 100%);
     }
     .app-card__icon--cleaner {
       background: linear-gradient(145deg, #64d2ff 0%, #0a84a8 100%);
@@ -592,7 +586,7 @@
         Homebrew Tap for macOS
       </span>
       <h1 id="hero-title">Native Mac apps.<br>One command away.</h1>
-      <p>Install Nodio, Router, Kode, NoteIt, Widgets, and Cleaner with Homebrew. Voice-to-text dictation, a local AI routing client, a coding agent, sticky notes with AI, desktop widgets, and a build cache cleaner, built for privacy, performance, and speed.</p>
+      <p>Install Nodio, Kode, Widgets, and Cleaner with Homebrew. Voice-to-text dictation, a coding agent, an all-in-one desktop widget studio (with AI sticky notes &amp; local AI router), and a build cache cleaner, built for privacy, performance, and speed.</p>
       <div class="hero__actions">
         <a href="#apps" class="btn btn-primary">Browse apps</a>
         <a href="https://github.com/its-ash/tap" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">View on GitHub</a>
@@ -602,7 +596,7 @@
     <section class="apps" id="apps" aria-labelledby="apps-title">
       <div class="apps__heading">
         <h2 id="apps-title">Available Applications</h2>
-        <p>Six native Mac utilities. Install any of them in seconds.</p>
+        <p>Four native Mac utilities. Install any of them in seconds.</p>
       </div>
       <div class="apps-grid">
         <article class="app-card" data-app="nodio">
@@ -638,40 +632,6 @@
           </div>
         </article>
 
-        <article class="app-card" data-app="router">
-          <header class="app-card__header">
-            <div class="app-card__icon app-card__icon--router" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="17 1 21 5 17 9"/>
-                <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
-                <polyline points="7 23 3 19 7 15"/>
-                <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
-              </svg>
-            </div>
-            <h3 class="app-card__name">Router</h3>
-            <p class="app-card__tagline">Native macOS AI routing client</p>
-          </header>
-          <div class="app-card__body">
-            <p class="app-card__description">A local OpenAI-compatible proxy that routes requests across NVIDIA, OpenRouter, Cloudflare, Groq, Ollama, and Hugging Face, with automatic fallback and model discovery.</p>
-            <ul class="app-card__features">
-              <li>Multi-provider routing with automatic fallback</li>
-              <li>OpenAI-compatible API (port 9694)</li>
-              <li>Model discovery & capability detection</li>
-              <li>Token usage & request activity log</li>
-              <li>Menu-bar app with zero-config setup</li>
-              <li>Requires macOS 15.0+ (Sequoia)</li>
-            </ul>
-            <div class="app-card__actions">
-              <a href="https://github.com/its-ash/router" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
-                View on GitHub
-              </a>
-              <button type="button" class="btn btn-primary app-card__btn" data-install="router" aria-label="Show Router installation instructions">
-                Install
-              </button>
-            </div>
-          </div>
-        </article>
-
         <article class="app-card" data-app="kode">
           <header class="app-card__header">
             <div class="app-card__icon app-card__icon--kode" aria-hidden="true">
@@ -684,13 +644,13 @@
             <p class="app-card__tagline">Native macOS coding agent</p>
           </header>
           <div class="app-card__body">
-            <p class="app-card__description">A coding agent that reads, edits, and runs code in one project folder. It sends each step through Router, so it uses any model Router can reach.</p>
+            <p class="app-card__description">A coding agent that reads, edits, and runs code in one project folder. Works with the built-in AI Router inside Widgets or any OpenAI-compatible endpoint.</p>
             <ul class="app-card__features">
               <li>Plan, Ask, and Auto modes</li>
               <li>File, search, edit, and shell tools in a sandboxed workspace</li>
               <li>Skill library with /slash invocation</li>
               <li>File tree, preview, and chat history per project</li>
-              <li>Works with Router on port 9694</li>
+              <li>Works with Widgets AI Router on port 9694</li>
               <li>Requires macOS 15.0+ (Sequoia)</li>
             </ul>
             <div class="app-card__actions">
@@ -698,39 +658,6 @@
                 View on GitHub
               </a>
               <button type="button" class="btn btn-primary app-card__btn" data-install="kode" aria-label="Show Kode installation instructions">
-                Install
-              </button>
-            </div>
-          </div>
-        </article>
-
-        <article class="app-card" data-app="noteit">
-          <header class="app-card__header">
-            <div class="app-card__icon app-card__icon--noteit" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15.5 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3Z"/>
-                <path d="M15 3v6h6"/>
-                <line x1="7" y1="13" x2="15" y2="13"/>
-                <line x1="7" y1="17" x2="12" y2="17"/>
-              </svg>
-            </div>
-            <h3 class="app-card__name">NoteIt</h3>
-            <p class="app-card__tagline">Sticky notes with AI refine</p>
-          </header>
-          <div class="app-card__body">
-            <p class="app-card__description">Stickies-style notes that float on your desktop, with one-click AI refine through any OpenAI- or Anthropic-compatible provider, including Router.</p>
-            <ul class="app-card__features">
-              <li>Pinned stickies and an All Notes window</li>
-              <li>AI refine with your own provider and model</li>
-              <li>Checklists and Markdown text</li>
-              <li>Optional Firebase sync and local backups</li>
-              <li>Requires macOS 15.0+ (Sequoia)</li>
-            </ul>
-            <div class="app-card__actions">
-              <a href="https://github.com/its-ash/noteit" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
-                View on GitHub
-              </a>
-              <button type="button" class="btn btn-primary app-card__btn" data-install="noteit" aria-label="Show NoteIt installation instructions">
                 Install
               </button>
             </div>
@@ -747,21 +674,21 @@
               </svg>
             </div>
             <h3 class="app-card__name">Widgets</h3>
-            <p class="app-card__tagline">Bento-style desktop widgets</p>
+            <p class="app-card__tagline">Bento desktop widgets, AI notes &amp; local router</p>
           </header>
           <div class="app-card__body">
-            <p class="app-card__description">Drag bento tiles onto your desktop: clock, date, weather, calendar, PM2 processes, and live AI usage limits.</p>
+            <p class="app-card__description">28 compact Rainbow Bento widgets for your Mac desktop: clocks, weather, calendar, AI usage limits, resizable sticky notes with AI refine, local AI router, dev ports, tasks, music, launcher, and paste board.</p>
             <ul class="app-card__features">
-              <li>Clock, date, and Open-Meteo weather tiles</li>
-              <li>Calendar widgets with upcoming events</li>
-              <li>AI 5-hour limits for Claude, Gemini, and Codex</li>
-              <li>PM2 process status at a glance</li>
-              <li>2×2, 4×2, and 4×4 sizes with a gallery</li>
-              <li>Requires macOS 15.0+ (Sequoia)</li>
+              <li>6 card themes (White, Blue, Violet, Pink, Gold, Dark)</li>
+              <li>Resizable Sticky Notes, Notepad &amp; All Notes with AI refine</li>
+              <li>Built-in OpenAI-compatible AI Router Server &amp; inline Chat</li>
+              <li>Clock, weather, calendar, AI 5h limits, PM2 &amp; Local Ports</li>
+              <li>Quick Tasks, Now Playing, Quick Launcher &amp; 9-slot Paste Board</li>
+              <li>Google Sign-In with Firebase sync · macOS 15.0+ (Sequoia)</li>
             </ul>
             <div class="app-card__actions">
-              <a href="https://github.com/its-ash/widgets" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
-                View on GitHub
+              <a href="https://widgets.itsash.in" class="btn btn-secondary app-card__btn" target="_blank" rel="noopener noreferrer">
+                Website
               </a>
               <button type="button" class="btn btn-primary app-card__btn" data-install="widgets" aria-label="Show Widgets installation instructions">
                 Install
@@ -847,19 +774,6 @@
         ],
         notes: "On first launch, grant Microphone and Accessibility permissions in System Settings \u2192 Privacy & Security."
       },
-      router: {
-        name: "Router",
-        cask: "router",
-        repo: "its-ash/router",
-        desc: "Native macOS AI routing client",
-        requirements: "Requires macOS 15.0+ (Sequoia)",
-        commands: [
-          { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
-          { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
-          { comment: "Install Router", command: "brew install --cask router" },
-        ],
-        notes: "After installing, open Router from Applications. Add at least one provider API key in Settings to start routing requests."
-      },
       kode: {
         name: "Kode",
         cask: "kode",
@@ -869,36 +783,22 @@
         commands: [
           { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
           { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
-          { comment: "Install Router (Kode sends requests through it)", command: "brew install --cask router" },
           { comment: "Install Kode", command: "brew install --cask kode" },
         ],
-        notes: "Start Router first. Then open Kode from Applications and choose a project folder."
-      },
-      noteit: {
-        name: "NoteIt",
-        cask: "noteit",
-        repo: "its-ash/noteit",
-        desc: "Sticky notes with AI refine",
-        requirements: "Requires macOS 15.0+ (Sequoia)",
-        commands: [
-          { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
-          { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
-          { comment: "Install NoteIt", command: "brew install --cask noteit" },
-        ],
-        notes: "Open NoteIt from Applications. To use AI refine, add a provider and API key in Settings."
+        notes: "Mount the AI Router widget in Widgets (port 9694) or configure any OpenAI-compatible endpoint in Kode."
       },
       widgets: {
         name: "Widgets",
         cask: "widgets",
         repo: "its-ash/widgets",
-        desc: "Bento-style desktop widgets",
+        desc: "Bento desktop widgets, AI sticky notes, local AI router & tools",
         requirements: "Requires macOS 15.0+ (Sequoia)",
         commands: [
           { comment: "Add the tap (once)", command: "brew tap its-ash/tap" },
           { comment: "Trust the tap (once, for unsigned casks)", command: "brew trust its-ash/tap" },
           { comment: "Install Widgets", command: "brew install --cask widgets" },
         ],
-        notes: "Open Widgets from Applications. Add tiles from the gallery. Grant Calendar access for calendar widgets."
+        notes: "Open Widgets from Applications, complete the quick permissions setup, and add tiles from the gallery. Sign in with Google to sync across Macs via Firebase."
       },
       cleaner: {
         name: "Cleaner",
