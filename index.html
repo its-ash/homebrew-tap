@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tap.itsash.in/">
   <link rel="canonical" href="https://tap.itsash.in/">
-  <link rel="icon" href="widgets/icon-web.svg" type="image/svg+xml">
+  <link rel="icon" href="widgets/icon.png" type="image/png">
   <style>
     :root {
       color-scheme: light dark;
@@ -234,6 +234,82 @@
       transition: background 150ms var(--ease);
     }
     .tap-strip button:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* Hero macOS Dock Showcase */
+    .dock-row {
+      margin: 38px auto 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      padding: 14px 22px;
+      border-radius: 28px;
+      background: color-mix(in srgb, var(--bg-subtle) 82%, transparent);
+      border: 1px solid var(--hairline);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .dock-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--ink-2);
+      font-size: 12px;
+      font-weight: 500;
+      transition: transform 220ms var(--ease), color 180ms var(--ease);
+    }
+    .dock-item img {
+      inline-size: 68px;
+      block-size: 68px;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.18));
+      transition: transform 220ms var(--ease);
+    }
+    .dock-item:hover { text-decoration: none; color: var(--ink); }
+    .dock-item:hover img { transform: translateY(-6px) scale(1.06); }
+
+    /* Card App Icon Headers & Stages */
+    .p-head-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-block-end: 12px;
+    }
+    .p-icon-sm {
+      inline-size: 58px;
+      block-size: 58px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+    }
+    .p-icon-stage {
+      inline-size: 118px;
+      block-size: 118px;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.24));
+      transition: transform 280ms var(--ease);
+    }
+    .product-tile:hover .p-icon-stage { transform: translateY(-4px) scale(1.03); }
+
+    .xsh-details {
+      margin-block-start: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .xsh-detail-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 11px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      font-size: 12.5px;
+      color: #d2d2d7;
+      text-align: start;
+    }
+    .xsh-detail-pill strong { color: #f5f5f7; font-weight: 600; display: block; font-size: 12.5px; line-height: 1.2; }
+    .xsh-detail-pill span { color: #8e8e93; font-size: 11px; display: block; line-height: 1.25; }
+    .xsh-dot { inline-size: 8px; block-size: 8px; border-radius: 50%; flex-shrink: 0; }
 
     /* ===== Apple Product Showcase Grid ===== */
     .showcase {
@@ -694,6 +770,8 @@
       }
       .product-tile--hero .p-desc,
       .product-tile--hero-dark .p-desc { margin-inline: auto; }
+      .product-tile--hero .p-head-row,
+      .product-tile--hero-dark .p-head-row { justify-content: center; }
       .product-tile--hero .p-links,
       .product-tile--hero-dark .p-links { justify-content: center; }
       .product-stack { grid-template-columns: 1fr; }
@@ -708,6 +786,9 @@
       .mw--2, .mw--3, .mw--4 { grid-column: span 2; }
       .mini-xsh__panes { grid-template-columns: 1fr; }
       .mini-xsh__pane + .mini-xsh__pane { border-inline-start: 0; border-block-start: 1px solid rgba(255, 255, 255, 0.08); }
+      .dock-row { gap: 12px; padding: 12px 14px; }
+      .dock-item img { inline-size: 54px; block-size: 54px; }
+      .xsh-details { grid-template-columns: 1fr; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition: none !important; animation: none !important; }
@@ -749,6 +830,24 @@
           <span>brew tap its-ash/tap</span>
           <button type="button" id="copy-tap">Copy</button>
         </div>
+        <div class="dock-row" aria-label="Mac apps in this tap">
+          <a class="dock-item" href="#card-widgets">
+            <img src="./widgets/icon.png" alt="Widgets" width="68" height="68">
+            <span>Widgets</span>
+          </a>
+          <a class="dock-item" href="#card-xsh">
+            <img src="./xsh/icon.png" alt="xsh" width="68" height="68">
+            <span>xsh</span>
+          </a>
+          <a class="dock-item" href="#card-nodio">
+            <img src="./nodio/icon.png" alt="Nodio" width="68" height="68">
+            <span>Nodio</span>
+          </a>
+          <a class="dock-item" href="#card-cleaner">
+            <img src="./cleaner/icon.png" alt="Cleaner" width="68" height="68">
+            <span>Cleaner</span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -756,12 +855,17 @@
       <div class="wrap--wide">
         <div class="product-stack">
           <!-- Flagship: Widgets -->
-          <article class="product-tile product-tile--hero">
+          <article class="product-tile product-tile--hero" id="card-widgets">
             <div>
-              <span class="p-badge">Flagship · v2.0</span>
-              <h2 class="p-title">Widgets</h2>
+              <div class="p-head-row">
+                <img class="p-icon-sm" src="./widgets/icon.png" alt="Widgets icon" width="58" height="58">
+                <div style="text-align:start">
+                  <span class="p-badge" style="margin-block-end:2px">Flagship · v2.0.1</span>
+                  <h2 class="p-title">Widgets</h2>
+                </div>
+              </div>
               <p class="p-tagline">Your Mac desktop, beautifully alive.</p>
-              <p class="p-desc">28 compact Rainbow Bento widgets across 6 finishes: clocks, weather, calendar, AI 5-hour limits, resizable sticky notes with AI refine, built-in local AI router, dev ports, tasks, music, launcher, and a 9-slot paste board — with Google &amp; Firebase sync.</p>
+              <p class="p-desc">28 compact Rainbow Bento widgets across 6 finishes: clocks, weather, calendar, AI 5-hour limits, resizable sticky notes with AI refine, built-in local AI router, dev ports, tasks, music, launcher, and a 9-slot paste board — with Google &amp; Firebase sync and automatic updates.</p>
               <div class="p-links">
                 <a href="./widgets/" class="pill-btn pill-btn--primary pill-btn--sm">Learn more</a>
                 <button type="button" class="pill-btn pill-btn--outline pill-btn--sm" data-install="widgets">Install</button>
@@ -807,18 +911,44 @@
             </div>
           </article>
 
-          <!-- Flagship Dark: xsh -->
-          <article class="product-tile product-tile--hero-dark">
+          <!-- Flagship Dark Detail Card: xsh -->
+          <article class="product-tile product-tile--hero-dark" id="card-xsh">
             <div>
-              <span class="p-badge">AI Terminal &amp; Shell</span>
-              <h2 class="p-title">xsh</h2>
+              <div class="p-head-row">
+                <img class="p-icon-sm" src="./xsh/icon.png" alt="xsh icon" width="58" height="58">
+                <div style="text-align:start">
+                  <span class="p-badge" style="margin-block-end:2px">AI Terminal &amp; Shell · <span id="xsh-ver">v0.1.6</span></span>
+                  <h2 class="p-title">xsh</h2>
+                </div>
+              </div>
               <p class="p-tagline">A terminal that understands you.</p>
-              <p class="p-desc">A native AppKit terminal and Rust shell with AI command generation, safety guard, tmux-style split panes &amp; multiplexer, declarative bundles, fuzzy completions, and XChaCha20 encrypted history.</p>
+              <p class="p-desc">A complete replacement for Terminal and iTerm crafted in native AppKit, SwiftUI, and Rust. Generate, explain, and fix commands in plain English with an approval safety guard, persistent tmux-style panes, declarative bundles, and encrypted SQLite history.</p>
+
+              <div class="xsh-details">
+                <div class="xsh-detail-pill">
+                  <span class="xsh-dot" style="background:#64d2ff"></span>
+                  <div><strong>AI Prompt &amp; Agent</strong><span>Natural language, explain, fix &amp; Claude Code mode</span></div>
+                </div>
+                <div class="xsh-detail-pill">
+                  <span class="xsh-dot" style="background:#30d158"></span>
+                  <div><strong>Safety Guard</strong><span>Approvals &amp; destructive checks before execution</span></div>
+                </div>
+                <div class="xsh-detail-pill">
+                  <span class="xsh-dot" style="background:#bf5af2"></span>
+                  <div><strong>Built-in Multiplexer</strong><span>Native tabs, split panes, detach &amp; re-attach</span></div>
+                </div>
+                <div class="xsh-detail-pill">
+                  <span class="xsh-dot" style="background:#ffd60a"></span>
+                  <div><strong>Encrypted History</strong><span>XChaCha20-Poly1305 SQLite + fuzzy Ctrl-R &amp; Tab</span></div>
+                </div>
+              </div>
+
               <div class="p-links">
                 <a href="./xsh/" class="pill-btn pill-btn--primary pill-btn--sm">Learn more</a>
                 <button type="button" class="pill-btn pill-btn--outline pill-btn--sm" data-install="xsh">Install</button>
+                <a href="https://github.com/its-ash/xsh" class="chevron-link" style="font-size:14.5px" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">›</span></a>
               </div>
-              <p class="p-meta">macOS 14.0 Sonoma or later · Apple Silicon · Rust + Swift</p>
+              <p class="p-meta">macOS 14.0 Sonoma or later · Apple Silicon · App + CLI (`xsh`) · Open Source</p>
             </div>
 
             <div class="mini-xsh" aria-hidden="true">
@@ -828,19 +958,29 @@
               </div>
               <div class="mini-xsh__panes">
 <div class="mini-xsh__pane"><span class="mini-xsh__tag">%1 ● ai agent</span><span class="xs-p">~/app</span> <span class="xs-b">main*</span> ❯ <span class="xs-ai">5 largest files</span>
-<span class="xs-dim">✦ suggested</span>
+<span class="xs-dim">✦ suggested (safe ✓)</span>
 find . -type f -exec du -h {} + | sort -rh | head -5
-<span class="xs-dim">[Enter] run · [e] edit</span></div>
+<span class="xs-dim">[Enter] run · [e] edit</span>
+
+<span class="xs-p">~/app</span> <span class="xs-b">main*</span> ❯ ai explain tar -xzf b.tgz
+<span class="xs-dim">-x extract · -z gunzip · -f archive</span></div>
 <div class="mini-xsh__pane"><span class="mini-xsh__tag">%2 cargo test</span><span class="xs-p">~/app</span> <span class="xs-b">main*</span> ❯ cargo test
+running 42 tests
 parser::pipes ... <span class="xs-ok">ok</span>
-history::search ... <span class="xs-ok">ok</span>
+jobs::bg ... <span class="xs-ok">ok</span>
+history::fuzzy ... <span class="xs-ok">ok</span>
+
 <span class="xs-ok">42 passed; 0 failed</span></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:8px 14px;background:rgba(255,255,255,0.04);border-top:1px solid rgba(255,255,255,0.07);font-size:10.5px;color:#8e8e93">
+                <span>[work] win 1/2 · pane %2</span>
+                <span>bundles: git, docker, rust · ai: ready</span>
               </div>
             </div>
           </article>
 
           <!-- Nodio -->
-          <article class="product-tile product-tile--light">
+          <article class="product-tile product-tile--light" id="card-nodio">
             <div>
               <span class="p-badge">Voice Dictation</span>
               <h2 class="p-title">Nodio</h2>
@@ -853,13 +993,7 @@ history::search ... <span class="xs-ok">ok</span>
               <p class="p-meta">macOS 13.3 Ventura or later · On-device Whisper</p>
             </div>
             <div class="p-stage">
-              <div class="app-glyph app-glyph--nodio" aria-hidden="true">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                  <line x1="12" y1="19" x2="12" y2="22"/>
-                </svg>
-              </div>
+              <img class="p-icon-stage" src="./nodio/icon.png" alt="Nodio app icon" width="118" height="118">
               <div class="stage-chips">
                 <span class="stage-chip">100% Offline</span>
                 <span class="stage-chip">Indian English &amp; Hinglish</span>
@@ -869,7 +1003,7 @@ history::search ... <span class="xs-ok">ok</span>
           </article>
 
           <!-- Cleaner -->
-          <article class="product-tile product-tile--dark">
+          <article class="product-tile product-tile--dark" id="card-cleaner">
             <div>
               <span class="p-badge">Developer Utility</span>
               <h2 class="p-title">Cleaner</h2>
@@ -882,15 +1016,7 @@ history::search ... <span class="xs-ok">ok</span>
               <p class="p-meta">macOS 14.0 Sonoma or later · Rust + SwiftUI</p>
             </div>
             <div class="p-stage">
-              <div class="app-glyph app-glyph--cleaner" aria-hidden="true">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3 6h18"/>
-                  <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-                  <line x1="10" y1="11" x2="10" y2="17"/>
-                  <line x1="14" y1="11" x2="14" y2="17"/>
-                </svg>
-              </div>
+              <img class="p-icon-stage" src="./cleaner/icon.png" alt="Cleaner app icon" width="118" height="118">
               <div class="stage-chips">
                 <span class="stage-chip">30+ Build Caches</span>
                 <span class="stage-chip">Safe Move to Trash</span>
@@ -1146,6 +1272,10 @@ history::search ... <span class="xs-ok">ok</span>
     fetch("https://api.github.com/repos/its-ash/xsh/releases/latest")
       .then(r => r.ok ? r.json() : null)
       .then(rel => {
+        if (rel && rel.tag_name) {
+          const el = document.getElementById("xsh-ver");
+          if (el) el.textContent = rel.tag_name;
+        }
         const asset = rel && (rel.assets || []).find(a => a.name && a.name.endsWith(".dmg"));
         if (asset && asset.browser_download_url) APPS.xsh.download = asset.browser_download_url;
       })
