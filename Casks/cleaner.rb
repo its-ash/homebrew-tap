@@ -1,6 +1,6 @@
 cask "cleaner" do
-  version "0.2.1"
-  sha256 "f42d3a0e6b5ba74b4dd90ca89146785496f39206cc0de42c6f0113bfef103299"
+  version "0.2.2"
+  sha256 "88409336bbb634a83d31817bb2e992a5c8242bb1181cc90ebc385aaaf07a0215"
 
   url "https://github.com/its-ash/cleaner/releases/download/v#{version}/Cleaner-#{version}-macos.zip"
   name "Cleaner"
