@@ -1,6 +1,6 @@
 cask "widgets" do
-  version "2.1.1"
-  sha256 "c1f298fd72aa34620353493e3191f68127a147468109e2f4d82b648ce43883ff"
+  version "2.1.2"
+  sha256 "fdb83575b523eb879965e4682d95ac8bed0a3cdef7f3eec2f8fd21c6ad8cf9c6"
 
   url "https://github.com/its-ash/homebrew-tap/releases/download/widgets-v#{version}/Widgets-#{version}-macos.zip"
   name "Widgets"
